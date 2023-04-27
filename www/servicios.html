@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MEK</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+    <style> 
+        @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }          @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+        @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }                   @viewport { user-zoom: fixed ; min-zoom: 100% ; }   
+        
+        .swal-text{
+            text-align: justify;
+        }
+    </style>
+    <!--Librerias JQUERY MOBILE 1.4.5 -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGkGcb30-SZjDt9N6VIUgAoPwX-MZCPFE&callback=myMap"></script>
+    <link rel="stylesheet" href="css/theme-konnen.min.css"/>
+    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css"/>
+    <link rel="stylesheet" href="jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css"/>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>    
+    <script type="text/javascript" src="jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/sweet.js"></script>
+    <script src="js/jquery.loadingModal.min.js"></script>
+    <link rel="stylesheet" href="css/jquery.loadingModal.min.css">
+    <script src="cordova.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/js_funciones_mek.js"></script>
+    <script src="js/hilo.js"></script>
+    <!--<script src="js/init-app.js"></script>-->
+    <script src="xdk/init-dev.js"></script>
+    <link rel="stylesheet" href="css/app.css">    
+</head>
+<body>  
+<div data-role="page" id="index" data-theme="c">
+        <div data-role="header" data-position='fixed'>
+            <center><img src="imagenes/e-konnen.png" /></center>
+            <a href="#panelM" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all"></a>
+            <a href="#" onclick="location.href='servicios.html';" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all"></a>
+        </div> 
+    
+     <div id="abajotiempoest" style="position:fixed; z-index: 9; display:block">
+       <fieldset data-role="controlgroup" data-type="horizontal">
+            <a href="#" id="lbltiempo" data-role="button" data-icon="clock" >0 min</a>            
+            <a href="#" id="lbldistancia" data-role="button" data-icon="location">0 mts</a>               
+            <div style="display:none"><a href='#' id="lblnoservicio" data-rel='popup' data-role='button' data-transition='pop' ></a>  </div>                  
+      </fieldset>
+    </div>
+      
+        <div data-role="collapsible-set" id="set" data-theme="a" data-content-theme="a" style="position:fixed; z-index: 99; opacity:0.92">      
+        </div>   
+        
+        <div id="abajo" style="position:fixed; z-index: 9; display:none">
+            <br><p></p><p></p>   
+                    
+                    <a href="#" onclick="js_inicia_ruta_recoleccion()" style="background:blue;" class="ui-btn ui-btn-b">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Iniciar Ruta de Recolección&nbsp;&nbsp;&nbsp;<img src="imagenes/arrow.gif" width="35px" height="23px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+    
+        <div id="divabajoentrega" style="position:fixed; z-index: 9; display:none">
+            <br><p></p><p></p>
+    
+                    <a href="#" onclick="js_inicia_ruta_entrega()" class="ui-btn ui-btn-b" style="background:blue;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Iniciar Ruta de Entrega&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="imagenes/arrow.gif" width="35px" height="23px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+        
+        <input type="hidden" id="latserviciodestino">
+        <input type="hidden" id="longserviciodestino">
+        <input type="hidden" id="latservicioorigen">
+        <input type="hidden" id="longservicioorigen">   
+        <input type="hidden" id="txtsetvicio">
+        <input type="hidden" id="txtestatusservicio">  
+    
+        <div id="map" style="width:100%;height:690px;"></div>
+        <div id="loading" style="display:none;">
+                <center>
+                <img src="imagenes/loading4.gif" />
+                </center>
+        </div>
+            
+            <div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="a" data-dismissible="true" style="max-width:450px;">
+                <div data-role="header" data-theme="a">
+                <h2>Detalle</h2>
+                </div>
+                <div role="main" class="ui-content">
+                    <h3 class="ui-title"><label id="lblservi"></label></h3>
+                    <h3 class="ui-title"><label id="lblenviarecibe"></label></h3>
+                    <h3 class="ui-title"><label id="lblorigdes"></label></h3>
+                <p></p>
+                    <fieldset data-role="controlgroup" data-type="horizontal">  
+                    <a href="#" data-theme="a" data-role="button" data-icon="check" onclick="location.href='registroEntregaExpress.html';">Entrega</a>
+                    <a href="#" data-theme="a" data-role="button" data-icon="alert" data-iconpos="right" onclick="location.href='registroIncidenciaExpress.html';" >Incidente</a>
+                <!-- <a href="#" data-theme="a" data-role="button" data-icon="check" onclick="location.href='entregas.html';">Entrega</a>
+                <a href="#" data-theme="a" data-role="button" data-icon="alert" data-iconpos="right" onclick="location.href='registroCheckpoint.html';" >Incidente</a> Modificado 8 Oct 2019 Aldo -->
+                    </fieldset>
+                </div>
+            </div>
+        
+             <div data-role="popup" id="popupDialogrecoleccion" data-overlay-theme="a" data-theme="a" data-dismissible="true" style="max-width:450px;">
+                <div data-role="header" data-theme="a">
+                <h2>Detalle Servicio</h2>
+                </div>
+                <div role="main" class="ui-content">
+                    <h3 class="ui-title"><label id="lblservirec"></label></h3>
+                    <h3 class="ui-title"><label id="lblenviareciberec"></label></h3>
+                    <h3 class="ui-title"><label id="lblorigdesrec"></label></h3>
+                    <h3 class="ui-title"><label id="lblpesos"></label></h3>
+                <p></p><br>
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                    <!--<a href="#" data-theme="a" data-role="button" data-icon="check" onclick="js_actualiza_check();" data-rel="back">Recolección Paquete</a>-->
+                        <a href="#" data-theme="a" data-role="button" data-icon="check" onclick="location.href='registroRecoleccionExpress.html';" >Recolección Paquete</a>
+                    </fieldset>
+                </div>
+            </div> 
+    
+             <div data-role="popup" id="popupDialoginformacion" data-overlay-theme="a" data-theme="a" data-dismissible="true" style="max-width:450px;">
+                 <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+                <div data-role="header" data-theme="a">
+                <h2>Detalle</h2>
+                </div>
+                <div role="main" class="ui-content"> 
+                    
+                </div>
+            </div> 
+    
+        <div data-role="popup" id="popupDialogrecoleccioneslist" data-overlay-theme="a" data-theme="a" data-dismissible="true" style="max-width:450px;">        
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <div data-role="header" data-theme="a">
+            <h2>Recolecciones</h2>
+            </div>
+            <div role="main" class="ui-content">                                                              
+                <ul data-role="listview" data-count-theme="c" data-filter="true" id="idserviciosentrega" name="idserviciosentrega" data-filter-placeholder="Buscar Servicio.." data-inset="true">
+                </ul>
+            </div>
+        </div> 
+    
+        <div data-role="popup" id="popupDialogentregaslist" data-overlay-theme="a" data-theme="a" data-dismissible="true" style="max-width:490px;">
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <div data-role="header" data-theme="a">
+                <h2>Ruta de Entrega</h2>
+            </div>
+            <div role="main" class="ui-content">                                                                                     
+                <ul data-role="listview" data-count-theme="c" data-filter="true" id="idservicios" name="idservicios" data-filter-placeholder="Buscar Servicio.." data-inset="true">                
+                </ul>                
+            </div>
+        </div>                
+         
+        <div data-role="footer" data-position='fixed'>
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#popupDialogrecoleccioneslist" data-rel='popup' data-transition='slidedown' data-position-to='window' data-icon="grid">Recolecciones</a></li>                    
+                    <li><a href="#popupDialogentregaslist" data-rel='popup' data-transition='slideup' data-position-to='window' data-icon="star">Entregas</a></li>
+                </ul>
+            </div>
+        </div>          
+        <div id="panelM" data-role="panel" data-position="left" data-display="push" data-theme="d">            
+            <ul data-role="listview" id="menuinicial" name="menuinicial">
+                <!-- <li><center>Usuario: <div id="nombreuser"></div></center>-->
+                <li>
+                    <center>Usuario: <div id="nombreuser"></div></center>
+                    <div data-role="control-group" data-mini="true">                        
+                        <br>
+                        <center>
+                            <select name="flip_Estatus" id="flip_Estatus" data-role="flipswitch" data-theme="b" data-mini="true" onchange="evento_flipSwitchEstatus();">     
+                                <option value="off"></option>
+                                <option value="on"></option>
+                            </select>
+                            <label id="lblEstatus" style="display: inline;">Disponible</label>
+                        </center>
+                    </div>
+                </li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='servicios.html';">Inicio</a></li>
+                <li data-icon="clock"><a href="#" onclick="location.href='historial_servicios.html';">Historial de Servicios</a></li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='menu_check.html';">Registro Movimientos</a></li>
+                <li data-icon="info"><a href="#" onclick="location.href='menu_legal.html';">Legal</a></li>
+	            <li data-icon="lock"><a href="#" onclick="cerrarSession();">Cerrar Sesi&oacute;n</a></li>
+            </ul>
+        </div>        
+    </div> 
+</body>
+</html>
+<script>
+    $(document).ready(function(){
+        /*if(sessionStorage.getItem("prueba")=="1"){
+            navigator.geolocation.getCurrentPosition(onSuccess, onError);
+            setTimeout( function() {
+                alert("recargar pagina");
+                location.href="servicios.html";
+                sessionStorage.setItem("prueba", "");
+            }, 1000);    
+        }*/
+        
+       document.addEventListener("online",intervalo_hilo,false);
+        
+        obtenserviciosrecoleccion(); //Carga la lista de los servicios para recolectar
+        obtenservicios();//Carga la lista de servicios para entrega
+        
+        var latini = sessionStorage.getItem("latitud");   
+        var longini = sessionStorage.getItem("longitud");
+        vermapa(latini,longini,""); // Se inicializa el mapa
+        
+        var tracknumber = sessionStorage.getItem('notificacionServ');//Valor del Num de Serv de la notificacion recibida
+        var latEnt = sessionStorage.getItem('latEntrega');
+        var longEnt = sessionStorage.getItem('longEntrega');
+        var latRec = sessionStorage.getItem('latRecoleccion');
+        var longRec = sessionStorage.getItem('longRecoleccion');
+        if(sessionStorage.getItem('notificacionServ') != null && sessionStorage.getItem('notificacionServ') != "bar" && sessionStorage.getItem('notificacionServ') != ""){//Se valida que haya un valor en la variable
+           document.addEventListener('deviceready', function () {
+               if (validarInternet_servicios()) {
+                   //swal("Detalle del servicio", sessionStorage.getItem('infoServ'), "info"); 
+                   initMaprecoleccion(latEnt,longEnt, tracknumber, latRec, longRec, 2, 1);//Pintar la ruta para recolectar marcada en la notificacion
+               } else {
+                   swal("Advertencia!", "No hay conexion a Internet", "warning");               
+               }
+               sessionStorage.setItem("notificacionServ", "");
+               sessionStorage.setItem("latEntrega", "");
+               sessionStorage.setItem("longEntrega", "");
+               sessionStorage.setItem("latRecoleccion", "");
+               sessionStorage.setItem("longRecoleccion", "");
+           }, false);
+        }
+        
+        var sEstatusSession = sessionStorage.getItem("estatusSession");//Pedimos el valor de la ultimo valor del estatus nombreuser
+        if(sEstatusSession == "1"){
+            sessionStorage.setItem("entraAPagina", "1");            
+            $("#flip_Estatus").val("on").flipswitch("refresh");
+        }else if(sEstatusSession == "0"){
+            document.getElementById("lblEstatus").innerHTML = "No Disponible";
+            $("#flip_Estatus").val("off").flipswitch("refresh");
+        }        
+    });
+    
+    //registro de servicio push
+    document.addEventListener('deviceready', function () {        
+        var notificationOpenedCallback = function(jsonData) {
+            if(jsonData==null){
+            }else{
+                obtenservicios();
+                obtenserviciosrecoleccion();//Modificado Aldo 8 Oct 2019
+            }
+        };
+
+        window.plugins.OneSignal
+        .startInit 
+        ("8ca70fb8-61a0-4584-a303-86bc8de3c8de")
+        .handleNotificationOpened(notificationOpenedCallback)
+        .endInit(); 
+        window.plugins.OneSignal.getIds( function ( ids ) {//funcion para obtener idUserPush
+            var ed = ids.userId;
+        });
+    }, false);
+    
+    $(window).bind("orientationchange", function(event){
+        if (event.orientation){ 
+            if(event.orientation=="landscape"){
+                var tam = parseFloat(document.body.clientHeight);
+                sessionStorage.setItem("tamPant", ""+tam);  
+            }else if(event.orientation=="portrait"){
+                var tam = parseFloat(document.body.clientHeight);
+                sessionStorage.setItem("tamPant", ""+tam);  
+            }
+            centra();
+        }         
+    });
+    centra();  
+    //obtenserviciosrecoleccion();
+    //obtenservicios();
+    
+    function validarInternet_servicios() {
+        var ban = false;
+        var networkState = navigator.connection.type;
+        var states = {};
+        //alert("1");
+        states[Connection.UNKNOWN] = 'Unknown connection';
+        states[Connection.ETHERNET] = 'Ethernet connection';
+        states[Connection.WIFI] = 'WiFi connection';
+        states[Connection.CELL_2G] = 'Cell 2G connection';
+        states[Connection.CELL_3G] = 'Cell 3G connection';
+        states[Connection.CELL_4G] = 'Cell 4G connection';
+        states[Connection.CELL] = 'Cell generic connection';
+        states[Connection.NONE] = 'No network connection';
+        //alert("2");
+        if (states[networkState] == 'No network connection' || states[networkState] == 'Unknown connection') {
+        } else {
+            ban = true;
+        }
+        //alert("3");
+        return ban;
+    }
+    
+    var markets=[];
+    
+    function centra(){
+        var marcadoresini;
+        var marker;
+        var pantallaTam = sessionStorage.getItem("tamPant");
+        if (window.matchMedia("(orientation: portrait)").matches) {
+            var top=(pantallaTam-190)+"px";     
+        }else if (window.matchMedia("(orientation: landscape)").matches) {
+            var top=(pantallaTam-190)+"px";   
+        }
+        var tamanopantalla=(pantallaTam-100)+"px";
+        document.getElementById("abajo").style.marginTop=top;
+        document.getElementById("divabajoentrega").style.marginTop=top;
+        document.getElementById("map").style.height=tamanopantalla;
+    }   
+
+// obtiene los servicios de servicios a entregar    
+function obtenservicios(){    
+    var urlconex = sessionStorage.getItem("urlconex");
+    document.getElementById("idservicios").innerHTML = "";
+    var idafiliado = sessionStorage.getItem("idusuario");      
+    var dataString="idafiliado="+idafiliado+"";
+    $('body').loadingModal({position: 'auto',text:'Loading...',color: '#fff',opacity: '0.9',backgroundColor: 'rgb(0,0,0)',animation: 'circle'});
+    //alert("loading 1");
+    habilitarloading();
+    $.ajax({
+		type : "GET",
+		url : urlconex+"consulta_servicios.php?"+dataString,		        
+		error : function() {
+            inabilitarloading();
+            $('body').loadingModal('destroy');
+		},
+        success: function(data) {  
+            var latitud="",longitud="";            
+            var marcaini;   
+            var tracknumber="";
+            var obj = JSON.parse(data);   
+            var latini = sessionStorage.getItem("latitud");   
+            var longini = sessionStorage.getItem("longitud");
+            var cdOrigen = "";
+            var estadoOrigen = "";
+            var origen = "";
+            var destino = "";
+            var empresa_destino = "";
+            var destinatario = "";
+            var tipo_servicio = "";
+            var largo = "";
+            var ancho = "";
+            var alto = "";
+            var peso = "";
+            var obser_destino = "";
+            //si hay longitud y latitud
+            if(latini!=null && longini!=null){
+                if(obj==""){ 
+                    //vermapa(latini,longini,"");
+                    inabilitarloading();
+                    $('body').loadingModal('destroy') ;
+                }else{
+                    //si existe servicios
+                    var numserv=obj.servicios_generados.length;
+                    //vermapa(latini,longini,"");
+                    marcadoresini=new Array(numserv);
+                    var li=document.createElement('li');
+                    li.id="";
+                    li.innerHTML="<a href='#' onclick='obtenservicios()'>Ver todos los servicios</a>";  
+                    for(var i=0;i<numserv;i++){
+                        var idmov=obj.servicios_generados[i].IdMov;
+                        latR = obj.servicios_generados[i].latitud_recoleccion;
+                        longR = obj.servicios_generados[i].longitud_recoleccion;
+                        
+                        latitud=obj.servicios_generados[i].latitud;                
+                        longitud=obj.servicios_generados[i].longitud;
+                        tracknumber=obj.servicios_generados[i].Tracknumber;
+                        marcadoresini[i]=["Servicio: "+idmov, ""+latitud, ""+longitud, "#"+idmov+"  "+obj.servicios_generados[i].cdorigen+" a "+obj.servicios_generados[i].cddestino];                
+                        var ori=obj.servicios_generados[i].cdorigen+" - "+obj.servicios_generados[i].cddestino+"";
+                        
+                        //Se arma la cadena del Domicilio Origen
+                        destino = obj.servicios_generados[i].calle_destino +" "+ obj.servicios_generados[i].no_ext_destino;
+                        if(obj.servicios_generados[i].no_int_destno != ""){
+                           destino += " " + obj.servicios_generados[i].no_int_destino;
+                        }
+                        destino += " Col. " + obj.servicios_generados[i].colonia_destino + " " + obj.servicios_generados[i].delegacion_municipio_destino;
+                        if(obj.servicios_generados[i].delegacion_municipio_destino != obj.servicios_generados[i].estado_destino){
+                           destino += " ," + obj.servicios_generados[i].estado_destino;
+                        }
+                        destino += ", " + obj.servicios_generados[i].cp_destino;
+                        //Datos complementarios del servicio
+                        empresa_destino = obj.servicios_generados[i].destinatario;//empresa destino
+                        destinatario = obj.servicios_generados[i].referencias_destino;//destinarario
+                        tipo_servicio = obj.servicios_generados[i].tipo_servicio;
+                        largo = obj.servicios_generados[i].largo;
+                        ancho = obj.servicios_generados[i].ancho;
+                        alto = obj.servicios_generados[i].alto;
+                        peso = obj.servicios_generados[i].peso_paquete;
+                        obser_destino = obj.servicios_generados[i].entre_calles_destino;
+                        var li=document.createElement('li');
+                            li.id=obj.servicios_generados[i].IdMov;
+                            li.innerHTML="<a href='#' title='Iniciar Entrega' onclick='initMapauno("+latitud+","+longitud+","+tracknumber+","+latR+","+longR+",2,1)'><center>"+tracknumber+"<br>"+tipo_servicio+"</center></a><a href='#' data-icon='info' onclick='detalle_servicio_entrega(\""+tracknumber+"\",\""+empresa_destino+"\",\""+destinatario+"\",\""+tipo_servicio+"\",\""+destino+"\",\""+largo+"\",\""+ancho+"\",\""+alto+"\",\""+peso+"\",\""+obser_destino+"\");'>Muestra información del servicio</a>"; 
+                            document.getElementById("idservicios").appendChild(li);                                
+                    }             
+                    $("#idservicios").listview("refresh");           
+                    $('body').loadingModal('destroy') ;
+                    inabilitarloading();
+                } 
+            }else{
+                //si no hay longitud y latitud
+                var numserv=obj.servicios_generados.length;
+                //vermapa(latini,longini,"");
+                marcadoresini=new Array(numserv);
+                var li=document.createElement('li');
+                li.id="";
+                li.innerHTML="<a href='#' onclick='obtenservicios()'>Ver todos los servicios</a>";  
+                
+                for(var i=0;i<numserv;i++){
+                    var idmov=obj.servicios_generados[i].IdMov;
+                    
+                    latR = obj.servicios_generados[i].latitud_recoleccion;
+                    longR = obj.servicios_generados[i].longitud_recoleccion;
+                    
+                    latitud=obj.servicios_generados[i].latitud;                
+                    longitud=obj.servicios_generados[i].longitud;
+                    tracknumber=obj.servicios_generados[i].Tracknumber;
+                    
+                    
+                     //Se arma la cadena del Domicilio Origen
+                        destino = obj.servicios_generados[i].calle_destino +" "+ obj.servicios_generados[i].no_ext_destino;
+                        if(obj.servicios_generados[i].no_int_destno != ""){
+                           destino += " " + obj.servicios_generados[i].no_int_destino;
+                        }
+                        destino += " Col. " + obj.servicios_generados[i].colonia_destino + " " + obj.servicios_generados[i].delegacion_municipio_destino;
+                        if(obj.servicios_generados[i].delegacion_municipio_destino != obj.servicios_generados[i].estado_destino){
+                           destino += " ," + obj.servicios_generados[i].estado_destino;
+                        }
+                        destino += ", " + obj.servicios_generados[i].cp_destino;
+                    //Datos complementarios del servicio
+                        empresa_destino = obj.servicios_generados[i].destinatario;//empresa destino
+                        destinatario = obj.servicios_generados[i].referencias_destino;//destinarario
+                        tipo_servicio = obj.servicios_generados[i].tipo_servicio;
+                        largo = obj.servicios_generados[i].largo;
+                        ancho = obj.servicios_generados[i].ancho;
+                        alto = obj.servicios_generados[i].alto;
+                        peso = obj.servicios_generados[i].peso_paquete;
+                        obser_destino = obj.servicios_generados[i].entre_calles_destino;
+                    
+                    marcadoresini[i]=["Servicio: "+idmov, ""+latitud, ""+longitud, "#"+idmov+"  "+obj.servicios_generados[i].cdorigen+" a "+obj.servicios_generados[i].cddestino];  
+                    var ori=obj.servicios_generados[i].cdorigen+" - "+obj.servicios_generados[i].cddestino+"";                 
+                    var li=document.createElement('li');
+                        li.id=obj.servicios_generados[i].IdMov;
+                        li.innerHTML="<a href='#' onclick='initMapauno("+latitud+","+longitud+","+tracknumber+","+latR+","+longR+",2,1)'><center>"+tracknumber+"<br>"+tipo_servicio+"</center></a><a href='#' data-icon='info' onclick='detalle_servicio_entrega(\""+tracknumber+"\",\""+empresa_destino+"\",\""+destinatario+"\",\""+tipo_servicio+"\",\""+destino+"\",\""+largo+"\",\""+ancho+"\",\""+alto+"\",\""+peso+"\",\""+obser_destino+"\");'>Muestra información del servicio</a>"; 
+                        document.getElementById("idservicios").appendChild(li);                                
+                }
+                inabilitarloading();
+                $("#idservicios").listview("refresh");              
+                alert("Por Favor, enciende GPS para Continuar...");
+                inabilitarloading();
+                $('body').loadingModal('destroy');
+            }
+        }
+	});
+}    
+           
+ function verdetalle(idservicio){     
+    location.href="pintar.html";    
+ } 
+</script>
+<script> 
+ var infowindow;   
+ function setMarkers(map, marcadores) {
+        for (var i = 0; i < marcadores.length; i++) {            
+            var myLatLng = new google.maps.LatLng(marcadores[i][1], marcadores[i][2]);
+            marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,                
+                title: marcadores[i][0],
+            });
+            (function(i, marker) {
+                google.maps.event.addListener(marker,'click',function() {
+                if (!infowindow) {
+                    infowindow = new google.maps.InfoWindow();
+                }
+                infowindow.setContent(marcadores[i][3]);
+                infowindow.open(map, marker);
+                });
+            })(i, marker);
+        }
+    };
+
+var map;
+var beachMarker;
+var distini=0, distfin=0;
+var colores = [{
+    featureType: "all",
+    elementType: "all",
+    stylers: [{ 
+        saturation: -99
+    },{
+        "gamma": 0.68
+    }]
+}];
+  
+    var tema1 = [
+    {
+        "featureType": "all",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": "-100"
+            },
+            {
+                "lightness": "41"
+            }
+        ]
+    }
+];
+    
+  var style = [
+    {
+        "featureType": "administrative",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            },
+            {
+                "color": "#fcfcfc"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            },
+            {
+                "color": "#fcfcfc"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            },
+            {
+                "color": "#dddddd"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            },
+            {
+                "color": "#dddddd"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            },
+            {
+                "color": "#eeeeee"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            },
+            {
+                "color": "#dddddd"
+            }
+        ]
+    }
+];  
+    
+function vermapa(latini,longini,marcadoresini){    
+    var latlng = new google.maps.LatLng(latini,longini);
+    var mapOptions = {
+        zoom: 18,
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: false,
+        zoomControl: false,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+    }
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    var estilo = new google.maps.StyledMapType(tema1);
+    map.mapTypes.set('mapa-bn', estilo);
+    map.setMapTypeId('mapa-bn');
+    marcadoresini=[];
+    setMarkers(map, marcadoresini);
+
+     //se agrego para que se vea en donde esta parado
+       var image = {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 4,                    
+                    fillOpacity: 0.8, 
+                    fillColor: 'white',
+                    strokeColor: 'black',
+                    strokeWeight: 14
+                };
+        var beachMarkerinicial = new google.maps.Marker({
+          position: {lat: +latini, lng: +longini},
+          map: map,
+          icon: image, 
+          title: "Mi ubicacion"
+        });    
+        markets.push(beachMarkerinicial);    
+}
+     
+function clearMap()
+{
+    marker.setMap(null);    
+    
+}     
+var directionsDisplay=null;
+    
+function initMapaunoRefresh(lati,longi, servicio,latR,longR,valor, inicial) {     
+    $( "#set" ).children( ":last" ).collapsible( "collapse" );   
+    if(directionsDisplay!=null){
+        directionsDisplay.setMap(null);    
+    }
+    sessionStorage.setItem("servicioselecionado", servicio);
+    document.getElementById("latserviciodestino").value=lati;
+    document.getElementById("longserviciodestino").value=longi;
+    document.getElementById("latservicioorigen").value=latR;
+    document.getElementById("longservicioorigen").value=longR;
+    document.getElementById("txtsetvicio").value=servicio;
+    document.getElementById("txtestatusservicio").value="ENTREGA";
+    
+    var urlsinicial="registroCheckpoint.html";
+    var labels="Recolección";
+    if(valor=="2"){
+        urlsinicial="entregas.html";
+        labels="Entrega";
+    }                  
+        document.getElementById("lblservi").innerHTML="<h3>Servicio: "+servicio+"</h3>";        
+        document.getElementById("lblnoservicio").innerHTML=""+servicio+"";        
+        obtendatosservicio(servicio);
+        habilitarloading();   
+        var cordenadaentrega=lati+","+longi;
+        var latitud = sessionStorage.getItem("latitud");
+        var longitud = sessionStorage.getItem("longitud");  
+        var moto="imagenes/moto2.png";
+        if(longitud<=longtemp){            
+            moto="imagenes/motoizq.png";
+        }
+        longtemp=sessionStorage.getItem("longitud");       
+    
+        var directionsService = new google.maps.DirectionsService;
+        directionsDisplay = new google.maps.DirectionsRenderer;
+      
+         for(var i = 0; i < markets.length; i++){            
+            markets[i].setMap(null);
+        }
+        
+        var iconent="imagenes/entrega.png";
+        var imageentre = {
+            url: iconent,
+            size: new google.maps.Size(100, 100),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(0, 28),
+            scaledSize: new google.maps.Size(40, 35)
+        };
+              
+        var beachMarkerentrega = new google.maps.Marker({
+          position: {lat: +lati, lng: +longi},
+          map: map,
+          icon: imageentre           
+        });  
+        markets.push(beachMarkerentrega);    
+       
+       var infowindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(beachMarkerentrega, 'click', (function(marker, i) {
+                        return function() {
+                            var mens = "<a href='#popupDialog' data-rel='popup' data-role='button' data-position-to='window' data-transition='pop' ><label id='lblnoservicio'>Finalizar Servicio</label></a>";
+                            infowindow.setContent(mens);
+                            infowindow.open(map, beachMarkerentrega);
+                        }
+                    })(beachMarkerentrega, i));
+       var tiempoestimando=document.getElementById("lbldistancia").innerHTML;
+        tiempoestimando=tiempoestimando.replace("km", "");
+        var b = parseFloat(tiempoestimando);
+    
+        if(b<=1){  //1 km se muestra la opcionde finalizar servicio
+            var mens = "<a href='#popupDialog' data-rel='popup' data-role='button' data-position-to='window' data-transition='pop' ><label id='lblnoservicio'>Finalizar Servicio</label></a>";
+            infowindow.setContent(mens);
+            infowindow.open(map, beachMarkerentrega);
+        } 
+    
+        //--------------------- MARCA RECOLECCION -------------------------
+        var imageRec = {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    scale: 4,                    
+                    fillOpacity: 0.8, 
+                    fillColor: 'white',
+                    strokeColor: 'green',
+                    strokeWeight: 14
+                };
+        var beachMarkerRec = new google.maps.Marker({
+          position: {lat: +latR, lng: +longR},
+          map: map,
+          icon: imageRec
+        });
+        markets.push(beachMarkerRec);
+      //-------------------------------------------------------------------- 
+    
+        var infowindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(beachMarkerRec, 'click', (function(marker, i) {
+                        return function() {
+                            var mens = "<label id='lblinfoRec'>Recolección de paquete</label>";
+                            infowindow.setContent(mens);
+                            infowindow.open(map, beachMarkerRec);
+                        }
+                    })(beachMarkerRec, i));
+    
+        var image = {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 4,                    
+                    fillOpacity: 0.8, 
+                    fillColor: 'white',
+                    strokeColor: 'black',
+                    strokeWeight: 14
+                };
+        
+        var beachMarker = new google.maps.Marker({
+          position: {lat: +latitud, lng: +longitud},
+          map: map,          
+          icon: image,          
+          title: "Servicio: "+servicio
+        });  
+        markets.push(beachMarker);    
+        //MUESTRA LINEA AZUL
+        var latlng = new google.maps.LatLng(latitud,longitud);
+    
+            directionsDisplay.setMap(map);  
+            directionsDisplay.setOptions( { suppressMarkers: true } );
+            directionsDisplay.setOptions({
+            polylineOptions: {
+                        strokeWeight: 4,
+                        strokeColor:  'blue' 
+                    }
+            });
+        
+          var ubicacionactual=latitud+","+longitud;                 
+          calculateAndDisplayRoute(directionsService, directionsDisplay,ubicacionactual,cordenadaentrega,inicial);         
+    
+        inabilitarloading();
+      }    
+
+//funcion que muestra el mapa de entrega    
+function initMapauno(lati,longi, servicio,latR,longR,valor, inicial) {    
+    document.getElementById("divabajoentrega").style.display="block";
+    document.getElementById("abajo").style.display="none";
+    $( "#popupDialogrecoleccioneslist" ).popup( "close" );
+    $( "#popupDialogentregaslist" ).popup( "close" );
+    $( "#set" ).children( ":last" ).collapsible( "collapse" );    
+    if(directionsDisplay!=null){
+        directionsDisplay.setMap(null);    
+    }
+    sessionStorage.setItem("servicioselecionado", servicio);
+    document.getElementById("latserviciodestino").value=lati;
+    document.getElementById("longserviciodestino").value=longi;
+    document.getElementById("latservicioorigen").value=latR;
+    document.getElementById("longservicioorigen").value=longR;
+    document.getElementById("txtsetvicio").value=servicio;
+    document.getElementById("txtestatusservicio").value="ENTREGA";
+    
+    var urlsinicial="registroCheckpoint.html";
+    var labels="Recolección";
+    if(valor=="2"){
+        urlsinicial="entregas.html";
+        labels="Entrega";
+    }                  
+        document.getElementById("lblservi").innerHTML="<h3>Servicio: "+servicio+"</h3>";        
+        document.getElementById("lblnoservicio").innerHTML=""+servicio+"";
+        obtendatosservicio(servicio);
+        habilitarloading();   
+        
+        var cordenadaentrega=lati+","+longi;
+        var latitud = sessionStorage.getItem("latitud");
+        var longitud = sessionStorage.getItem("longitud");         
+  
+        var moto="imagenes/moto2.png";
+        if(longitud<=longtemp){            
+            moto="imagenes/motoizq.png";
+        }
+        longtemp=sessionStorage.getItem("longitud");       
+    
+        var directionsService = new google.maps.DirectionsService;
+        directionsDisplay = new google.maps.DirectionsRenderer;
+      
+         for(var i = 0; i < markets.length; i++){            
+            markets[i].setMap(null);
+        }
+        
+        var iconent="imagenes/entrega.png";
+        var imageentre = {
+            url: iconent,
+            size: new google.maps.Size(100, 100),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(0, 28),
+            scaledSize: new google.maps.Size(40, 35)
+        };
+              
+        var beachMarkerentrega = new google.maps.Marker({
+          position: {lat: +lati, lng: +longi},
+          map: map,
+          icon: imageentre           
+        });  
+        markets.push(beachMarkerentrega);    
+       
+       var infowindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(beachMarkerentrega, 'click', (function(marker, i) {
+                        return function() {
+                            var mens = "<a href='#popupDialog' data-rel='popup' data-role='button' data-position-to='window' data-transition='pop' ><label id='lblnoservicio'>Finalizar Servicio</label></a>";
+                            infowindow.setContent(mens);
+                            infowindow.open(map, beachMarkerentrega);
+                        }
+                    })(beachMarkerentrega, i));
+       var tiempoestimando=document.getElementById("lbldistancia").innerHTML;
+        tiempoestimando=tiempoestimando.replace("km", "");
+        var b = parseFloat(tiempoestimando);
+        if(b<=1){
+        } 
+    
+        //--------------------- MARCA RECOLECCION -------------------------
+        var imageRec = {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    // This marker is 20 pixels wide by 32 pixels high.
+                    scale: 4,                    
+                    fillOpacity: 0.8, 
+                    fillColor: 'white',
+                    strokeColor: 'green',
+                    strokeWeight: 14
+                };
+    
+        var beachMarkerRec = new google.maps.Marker({
+          position: {lat: +latR, lng: +longR},
+          map: map,
+          icon: imageRec
+        });
+        markets.push(beachMarkerRec);
+      //-------------------------------------------------------------------- 
+    
+        var infowindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(beachMarkerRec, 'click', (function(marker, i) {
+                        return function() {
+                            var mens = "<label id='lblinfoRec'>Recolección de paquete</label>";
+                            infowindow.setContent(mens);
+                            infowindow.open(map, beachMarkerRec);
+                        }
+                    })(beachMarkerRec, i));
+    
+        var image = {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 4,                    
+                    fillOpacity: 0.8, 
+                    fillColor: 'white',
+                    strokeColor: 'black',
+                    strokeWeight: 14
+                };
+    
+        var beachMarker = new google.maps.Marker({
+          position: {lat: +latitud, lng: +longitud},
+          map: map,          
+          icon: image,          
+          title: "Servicio: "+servicio
+        });  
+        markets.push(beachMarker);    
+        //MUESTRA RAYA AZUL
+        var latlng = new google.maps.LatLng(latitud,longitud);
+        map.setCenter(latlng);  
+          var bounds=new google.maps.LatLngBounds();
+          bounds.extend(beachMarker.getPosition());  
+          map.fitBounds(bounds);    
+          bounds.extend(beachMarkerentrega.getPosition());  
+          map.fitBounds(bounds); 
+    
+            directionsDisplay.setMap(map);  
+            directionsDisplay.setOptions( { suppressMarkers: true } );
+            directionsDisplay.setOptions({
+            polylineOptions: {
+                        strokeWeight: 4,
+                        strokeColor:  'blue' 
+                    }
+            });
+    
+          var ubicacionactual=latitud+","+longitud;                 
+          calculateAndDisplayRoute(directionsService, directionsDisplay,ubicacionactual,cordenadaentrega,inicial);   
+          inabilitarloading();
+}
+
+      function calculateAndDisplayRoute(directionsService, directionsDisplay,ubicacionactual,cordenadaentrega,inicial) {
+        var waypts = [];
+        var checkboxArray;        
+        var ini = ubicacionactual;  
+        var end = cordenadaentrega;
+        directionsService.route({
+          origin: ini,
+          destination: end,
+          waypoints: waypts,
+          optimizeWaypoints: true,
+          travelMode: 'DRIVING'
+        }, function(response, status) {            
+          if (status === 'OK') {
+                      directionsDisplay.setDirections(response); 
+                      directionsDisplay.setOptions({ preserveViewport: true });
+            
+            var route = response.routes[0]; 
+            var distanci=route.legs[0].distance.text;
+            distanci=distanci.replace(",",".");  
+            var tipomedida=distanci.substr(distanci.length-2,distanci.length);
+            tipomedida=tipomedida.trim();            
+            
+            if(tipomedida=="m"){
+                distanci=distanci.substr(0,distanci.length-2);                        
+            }else{
+                distanci=distanci.substr(0,distanci.length-3);                        
+            }
+            
+            distanci=Math.ceil(distanci); 
+              
+            if(tipomedida=="m"){
+                distanci=1;
+            }
+             
+            var tiempos=route.legs[0].duration.text;
+            document.getElementById("lbltiempo").innerHTML=""+tiempos;  
+            document.getElementById("lbldistancia").innerHTML=""+route.legs[0].distance.text; 
+          } else {
+          }
+          
+        });
+          
+      }
+
+
+//actualizar mapa cada n tiempo
+var x = setInterval(function() {
+   var lati = document.getElementById("latserviciodestino").value;
+   var longi = document.getElementById("longserviciodestino").value;
+   var latiR = document.getElementById("latservicioorigen").value;
+   var longiR = document.getElementById("longservicioorigen").value;
+   var txtsetvicio = document.getElementById("txtsetvicio").value;
+   var txtestatusservicio = document.getElementById("txtestatusservicio").value;
+
+   if(lati!=""){
+       if(txtestatusservicio=="ENTREGA"){
+        initMapaunoRefresh(lati,longi, txtsetvicio,latiR,longiR,2,2) ;
+       }
+       if(txtestatusservicio=="RECOLECCION"){
+        initMaprecoleccionRefresh(lati,longi, txtsetvicio,latiR,longiR,2,2) ;
+       }
+   }
+}, 10000);     
+</script>
+<script>
+var nombreusuario = sessionStorage.getItem("nombreuser");
+document.getElementById("nombreuser").innerHTML=""+nombreusuario;
+    
+function obtendatosservicio(servicio){
+    var urlconex = sessionStorage.getItem("urlconex");        
+    var dataString="tracknumber="+servicio+"";         
+    $.ajax({
+		type : "GET",
+		url : urlconex+"obtener_datos_servicio.php?"+dataString,		        
+		error : function() {        
+            inabilitarloading();
+		},
+        success: function(data) {
+            var latitud="",longitud="";            
+            var marcaini;   
+            var tracknumber="";
+            var obj = JSON.parse(data);            
+            var numserv=obj.servicios_generados.length;                                           
+            for(var i=0;i<numserv;i++){
+                var razon_social=obj.servicios_generados[i].razon_social;
+                var EmpresaDestinatario=obj.servicios_generados[i].EmpresaDestinatario;                
+                var cdorigen=obj.servicios_generados[i].calleorigen+" #"+obj.servicios_generados[i].noextorigen+" Col. "+obj.servicios_generados[i].coloniaorigen+", "+obj.servicios_generados[i].cdorigen;                                                         
+                var cddestino=obj.servicios_generados[i].calledestino+" #"+obj.servicios_generados[i].noextdestino+" Col. "+obj.servicios_generados[i].coloniadestino+", "+obj.servicios_generados[i].cddestino;     
+                document.getElementById("lblenviarecibe").innerHTML="<b>Envia:</b> "+razon_social+"<br><b>Recibe:</b> "+EmpresaDestinatario;    
+                document.getElementById("lblorigdes").innerHTML="<b>Origen:</b> "+cdorigen+"<br><br><b>Destino:</b> "+cddestino;
+            }                         
+            inabilitarloading();
+        }
+	});            
+}
+var longtemp=sessionStorage.getItem("longitud");   
+    
+// Se obtienes los servicios que tiene asignado para su recoleccion
+function obtenserviciosrecoleccion(){
+    var urlconex = sessionStorage.getItem("urlconex");
+    document.getElementById("idserviciosentrega").innerHTML = "";//Modificado Aldo 8 oct 2019
+    var idafiliado = sessionStorage.getItem("idusuario");
+    var dataString="idafiliado="+idafiliado+"";
+    $('body').loadingModal({position: 'auto',text:'Loading...',color: '#fff',opacity: '0.9',backgroundColor: 'rgb(0,0,0)',animation: 'circle'});
+    //alert("loading 2");
+    habilitarloading();
+    $.ajax({
+        type : "GET",
+        url : urlconex+"consulta_servicios_recoleccion.php?"+dataString,
+        error : function() {
+            inabilitarloading();
+            $('body').loadingModal('destroy');
+        },
+        success: function(data) {  
+            //alert("success");
+            var latitud="",longitud="";
+            var marcaini;
+            var tracknumber="";
+            var obj = JSON.parse(data);
+            if(obj==""){
+                var latini = sessionStorage.getItem("latitud");
+                var longini = sessionStorage.getItem("longitud");
+                //vermapa(latini,longini,"");
+                inabilitarloading();
+                $('body').loadingModal('destroy');
+            }else{
+                var numserv=obj.servicios_generados.length;
+                var latini = sessionStorage.getItem("latitud");
+                var longini = sessionStorage.getItem("longitud");
+                marcadoresini=new Array(numserv);
+                var li=document.createElement('li');
+                var origen = "";
+                var destino = "";
+                var empresa_origen = "";
+                var remitente = "";
+                var tipo_servicio = "";
+                var largo = "";
+                var ancho = "";
+                var alto = "";
+                var peso = "";
+                var obser_origen = "";
+                li.id="";
+                li.innerHTML="<a href='#' onclick='obtenservicios()'>Ver todos los servicios</a>";                
+                for(var i=0;i<numserv;i++){
+                    var idmov=obj.servicios_generados[i].IdMov;
+                    latR = obj.servicios_generados[i].latitud_recoleccion;
+                    longR = obj.servicios_generados[i].longitud_recoleccion;
+                    latitud=obj.servicios_generados[i].latitud;
+                    longitud=obj.servicios_generados[i].longitud;
+                    tracknumber=obj.servicios_generados[i].Tracknumber;
+                    marcadoresini[i]=["Servicio: "+idmov, ""+latitud, ""+longitud, "#"+idmov+" "+obj.servicios_generados[i].cdorigen+" a "+obj.servicios_generados[i].cddestino];
+                    var ori=obj.servicios_generados[i].cdorigen+" - "+obj.servicios_generados[i].cddestino
+                    //Se arma la cadena del Domicilio Origen
+                    origen = obj.servicios_generados[i].calle_origen +" "+ obj.servicios_generados[i].no_ext_origen;
+                    if(obj.servicios_generados[i].no_int_origen != ""){
+                        origen += " " + obj.servicios_generados[i].no_int_origen;
+                    }
+                    origen += " Col. " + obj.servicios_generados[i].colonia_origen + " " + obj.servicios_generados[i].delegacion_municipio_origen;
+                    if(obj.servicios_generados[i].delegacion_municipio_origen != obj.servicios_generados[i].estado_origen){
+                        origen += " ," + obj.servicios_generados[i].estado_origen;
+                    }
+                    origen += ", " + obj.servicios_generados[i].cp_origen;
+                    //Datos complementarios del servicio
+                    empresa_origen = obj.servicios_generados[i].remitente;//empresa origen
+                    remitente = obj.servicios_generados[i].referencias_origen;//remitente
+                    destinatario = obj.servicios_generados[i].destinatario;
+                    tipo_servicio = obj.servicios_generados[i].tipo_servicio;
+                    largo = obj.servicios_generados[i].largo;
+                    ancho = obj.servicios_generados[i].ancho;
+                    alto = obj.servicios_generados[i].alto;
+                    peso = obj.servicios_generados[i].peso_paquete;
+                    obser_origen = obj.servicios_generados[i].entre_calles_origen;
+                    var li=document.createElement('li');
+                    li.id=obj.servicios_generados[i].IdMov;
+                    li.innerHTML="<a href='#' id=\""+tracknumber+"\" title='Iniciar Recolección' onclick='initMaprecoleccion("+latitud+","+longitud+","+tracknumber+","+latR+","+longR+",2,1)'><center>"+tracknumber+"<br>"+tipo_servicio+"</center></a><a href='#' data-icon='info' onclick='detalle_servicio_recoleccion(\""+tracknumber+"\",\""+empresa_origen+"\",\""+remitente+"\",\""+tipo_servicio+"\",\""+origen+"\",\""+largo+"\",\""+ancho+"\",\""+alto+"\",\""+peso+"\",\""+obser_origen+"\");'>Muestra información del servicio</a>";
+                    document.getElementById("idserviciosentrega").appendChild(li);
+                }
+                $("#idserviciosentrega").listview("refresh");
+                //vermapa(latini,longini,"");
+                $('body').loadingModal('destroy') ;
+                inabilitarloading();
+            }
+        }
+    });
+}
+
+function detalle_servicio_recoleccion(psNumServ,psEmpOrigen, psRemitente, psTipoServ, psOrigen, psLargo, psAncho, psAlto, psPeso, psObser){    
+    if(psObser == ""){
+        swal("Detalle del Servicio: "+psNumServ,"Empresa Origen: "+psEmpOrigen+"\nRemitente: " + psRemitente + "\nTipo Servicio: " + psTipoServ + "\nRecolección: " + psOrigen + "\nAlto: " + +psAlto+" cm | Ancho: "+psAncho+" cm\nLargo: " +psLargo + " cm | Peso: " + psPeso + " kg", {timer: 60000, animation: true});
+    }else{
+        swal("Detalle del Servicio : "+psNumServ,"Empresa Origen: "+psEmpOrigen+"\nRemitente: " + psRemitente + "\nTipo Servicio: " + psTipoServ + "\nRecolección: " + psOrigen + "\nAlto: " + +psAlto+" cm | Ancho: "+psAncho+" cm\nLargo: " +psLargo + " cm | Peso: " + psPeso + " kg\nObservaciones: " + psObser, {timer: 60000, animation: true});
+    }
+}
+
+function detalle_servicio_entrega(psNumServ, psEmpDestino, psDestinatario, psTipoServ, psDestino, psLargo, psAncho, psAlto, psPeso, psObser){    
+    if(psObser == ""){
+        swal("Detalle del Servicio: " + psNumServ,"Empresa Destino: "+psEmpDestino+"\nDestinatario: " + psDestinatario + "\nTipo Servicio: " + psTipoServ + "\nEntrega: " + psDestino + "\nAlto: " + +psAlto+" cm | Ancho: "+psAncho+" cm\nLargo: " +psLargo + " cm | Peso: " + psPeso + " kg", {timer: 60000, animation: true}); 
+    }else{
+         swal("Detalle del Servicio: " + psNumServ,"Empresa Destino: "+psEmpDestino+"\nDestinatario: " + psDestinatario + "\nTipo Servicio: " + psTipoServ + "\nEntrega: " + psDestino + "\nAlto: " + +psAlto+" cm | Ancho: "+psAncho+" cm\nLargo: " +psLargo + " cm | Peso: " + psPeso + " kg\nObservaciones: "+psObser, {timer: 60000, animation: true}); 
+    }        
+} 
+    
+    
+//Muestra el mapa de la recoleccion seleccionada y refresca ubicacion del afiliado
+function initMaprecoleccionRefresh(lati,longi, servicio,latR,longR,valor, inicial) {
+    $( "#set" ).children( ":first" ).collapsible( "collapse" ); 
+    if(directionsDisplay!=null){
+        directionsDisplay.setMap(null);
+    }
+    sessionStorage.setItem("servicioselecionado", servicio);
+    document.getElementById("latserviciodestino").value=lati;
+    document.getElementById("longserviciodestino").value=longi;
+    document.getElementById("latservicioorigen").value=latR;
+    document.getElementById("longservicioorigen").value=longR;
+    document.getElementById("txtsetvicio").value=servicio;
+    document.getElementById("txtestatusservicio").value="RECOLECCION";
+    
+    var urlsinicial="registroCheckpoint.html";
+    var labels="Recolección";
+    if(valor=="2"){
+        urlsinicial="entregas.html";
+        labels="Entrega";
+    }
+    document.getElementById("lblservirec").innerHTML="<h3>Servicio: "+servicio+"</h3>";
+    document.getElementById("lblnoservicio").innerHTML=""+servicio+"";
+        obtendatosserviciorecoleccion(servicio);
+        habilitarloading();
+
+        var cordenadaentrega=latR+","+longR;
+        var latitud = sessionStorage.getItem("latitud");
+        var longitud = sessionStorage.getItem("longitud");
+    
+        var moto="imagenes/moto2.png";
+        if(longitud<=longtemp){
+            moto="imagenes/motoizq.png";
+        }
+        longtemp=sessionStorage.getItem("longitud");
+
+        var directionsService = new google.maps.DirectionsService;
+        directionsDisplay = new google.maps.DirectionsRenderer;
+
+         for(var i = 0; i < markets.length; i++){
+            markets[i].setMap(null);
+        }
+        
+        var iconent="imagenes/entrega.png";
+        var imageentre = {
+            url: iconent,
+            size: new google.maps.Size(100, 100),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(0, 28),
+            scaledSize: new google.maps.Size(40, 35)
+        }; 
+
+        var beachMarkerentrega = new google.maps.Marker({
+          position: {lat: +lati, lng: +longi},
+          map: map,
+          icon: imageentre,
+          title: "ENTREGA: "+servicio
+        });
+        markets.push(beachMarkerentrega);
+    
+        //Etiqueta para señalar donde esta la entrega
+        var infowindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(beachMarkerentrega, 'click', (function(marker, i) {
+                        return function() {
+                            var mens = "<label id='lblinfoEnt'>Entrega de paquete</label>";
+                            infowindow.setContent(mens);
+                            infowindow.open(map, beachMarkerentrega);
+                        }
+                    })(beachMarkerentrega, i));
+    
+        //--------------------- MARCA RECOLECCION -------------------------
+        var imageRec = {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 4,                    
+                    fillOpacity: 0.8, 
+                    fillColor: 'white',
+                    strokeColor: 'green',
+                    strokeWeight: 14
+                };
+    
+        var beachMarkerRec = new google.maps.Marker({
+          position: {lat: +latR, lng: +longR},
+          map: map,
+          icon: imageRec
+        });
+        markets.push(beachMarkerRec);
+      //-------------------------------------------------------------------- 
+    
+        var infowindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(beachMarkerRec, 'click', (function(marker, i) {
+                        return function() {
+                            var mens = "<a href='#popupDialogrecoleccion' data-rel='popup' data-role='button' data-position-to='window' data-transition='pop' ><label id='lblnoservicio'>Recolección de paquete</label></a>";
+                            infowindow.setContent(mens);
+                            infowindow.open(map, beachMarkerRec);
+                        }
+                    })(beachMarkerRec, i));
+       var tiempoestimando=document.getElementById("lbldistancia").innerHTML;
+        tiempoestimando=tiempoestimando.replace("km", "");
+        var b = parseFloat(tiempoestimando);
+        if(b<=1){  //1 km se muestra la opcionde recoleccion de paquete
+            var mens = "<a href='#popupDialogrecoleccion' data-rel='popup' data-role='button' data-position-to='window' data-transition='pop' ><label id='lblnoservicio'>Recolección de paquete</label></a>";
+            infowindow.setContent(mens);
+            infowindow.open(map, beachMarkerRec);
+        }
+
+         var image = {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 4,                    
+                    fillOpacity: 0.8, 
+                    fillColor: 'white',
+                    strokeColor: 'black',
+                    strokeWeight: 14
+                };
+
+        var beachMarker = new google.maps.Marker({
+          position: {lat: +latitud, lng: +longitud},
+          map: map,
+          icon: image,
+          title: "Servicio: "+servicio
+        });
+        markets.push(beachMarker);
+        
+        //ESTO ES LO DE LA RAYA AZUL
+        var latlng = new google.maps.LatLng(latitud,longitud);
+            directionsDisplay.setMap(map);
+            directionsDisplay.setOptions( { suppressMarkers: true } );
+            directionsDisplay.setOptions({
+            polylineOptions: {
+                        strokeWeight: 4,
+                        strokeColor:  'blue'
+                    }
+            });
+    
+    var ubicacionactual=latitud+","+longitud;
+    calculateAndDisplayRoute(directionsService, directionsDisplay,ubicacionactual,cordenadaentrega,inicial);
+    inabilitarloading();
+}    
+
+//MUESTRA MAPA CUANDO SE SELECCIONA UN SERVICIO A RECOLECTAR    
+function initMaprecoleccion(lati,longi, servicio,latR, longR,valor, inicial) {
+    document.getElementById("divabajoentrega").style.display="none";
+    document.getElementById("abajo").style.display="block";
+    $( "#popupDialogrecoleccioneslist" ).popup( "close" );
+    $( "#popupDialogentregaslist" ).popup( "close" );
+    $( "#set" ).children( ":first" ).collapsible( "collapse" ); 
+    if(directionsDisplay!=null){
+        directionsDisplay.setMap(null);
+    }
+    sessionStorage.setItem("servicioselecionado", servicio);
+    document.getElementById("latserviciodestino").value=lati;
+    document.getElementById("longserviciodestino").value=longi;
+    document.getElementById("latservicioorigen").value=latR;
+    document.getElementById("longservicioorigen").value=longR;
+    document.getElementById("txtsetvicio").value=servicio;
+    document.getElementById("txtestatusservicio").value="RECOLECCION";
+    
+    var urlsinicial="registroCheckpoint.html";
+    var labels="Recolección";
+    if(valor=="2"){
+        urlsinicial="entregas.html";
+        labels="Entrega";
+    }
+    document.getElementById("lblservirec").innerHTML="<h3>Servicio: "+servicio+"</h3>";
+    document.getElementById("lblnoservicio").innerHTML=""+servicio+"";
+        obtendatosserviciorecoleccion(servicio);
+        habilitarloading();
+    
+        var cordenadaentrega=latR+","+longR;
+        var latitud = sessionStorage.getItem("latitud"); 
+        var longitud = sessionStorage.getItem("longitud");
+    
+        var moto="imagenes/moto2.png";
+        if(longitud<=longtemp){
+            moto="imagenes/motoizq.png";
+        }
+        longtemp=sessionStorage.getItem("longitud");
+
+        var directionsService = new google.maps.DirectionsService;
+        directionsDisplay = new google.maps.DirectionsRenderer;
+    
+         for(var i = 0; i < markets.length; i++){
+            markets[i].setMap(null);
+        }
+        
+        var iconent="imagenes/entrega.png";
+        var imageentre = {
+            url: iconent,
+            size: new google.maps.Size(100, 100),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(0, 28),
+            scaledSize: new google.maps.Size(40, 35)
+        }; 
+
+        var beachMarkerentrega = new google.maps.Marker({
+          position: {lat: +lati, lng: +longi},
+          map: map,
+          icon: imageentre,
+          title: "ENTREGA: "+servicio
+        });
+        markets.push(beachMarkerentrega);
+    
+        //Etiqueta para señalar donde esta la entrega
+        var infowindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(beachMarkerentrega, 'click', (function(marker, i) {
+                        return function() {
+                            var mens = "<label id='lblinfoEnt'>Entrega de paquete</label>";
+                            infowindow.setContent(mens);
+                            infowindow.open(map, beachMarkerentrega);
+                        }
+                    })(beachMarkerentrega, i));
+        //--------------------- MARCA RECOLECCION -------------------------
+        var imageRec = {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 4,                    
+                    fillOpacity: 0.8, 
+                    fillColor: 'white',
+                    strokeColor: 'green',
+                    strokeWeight: 14
+                };
+
+        var beachMarkerRec = new google.maps.Marker({
+          position: {lat: +latR, lng: +longR},
+          map: map,
+          icon: imageRec
+        });
+        markets.push(beachMarkerRec);
+      //-------------------------------------------------------------------- 
+    
+        var infowindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(beachMarkerRec, 'click', (function(marker, i) {
+                        return function() {
+                            var mens = "<a href='#popupDialogrecoleccion' data-rel='popup' data-role='button' data-position-to='window' data-transition='pop' ><label id='lblnoservicio'>Recolección de paquete</label></a>";
+                            infowindow.setContent(mens);
+                            infowindow.open(map, beachMarkerRec);
+                        }
+                    })(beachMarkerRec, i));
+       var tiempoestimando=document.getElementById("lbldistancia").innerHTML;
+        tiempoestimando=tiempoestimando.replace("km", "");
+        var b = parseFloat(tiempoestimando);
+        //alert(b);
+        if(b<=1){  //1 km se muestra la opcionde recoleccion de paquete
+            var mens = "<a href='#popupDialogrecoleccion' data-rel='popup' data-role='button' data-position-to='window' data-transition='pop' ><label id='lblnoservicio'>Recolección de paquete</label></a>";
+            infowindow.setContent(mens);
+            infowindow.open(map, beachMarkerRec);
+        }
+    
+    var image = {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 4,                    
+                    fillOpacity: 0.8, 
+                    fillColor: 'white',
+                    strokeColor: 'black',
+                    strokeWeight: 14
+                };
+
+       var beachMarker = new google.maps.Marker({
+          position: {lat: +latitud, lng: +longitud},
+          map: map,
+          icon: image,
+          title: "Servicio: "+servicio
+        });
+        markets.push(beachMarker);  
+
+        // ESTO ES LA RAYA AZUL
+        var latlng = new google.maps.LatLng(latitud,longitud);
+        map.setCenter(latlng);  
+          var bounds=new google.maps.LatLngBounds();
+          bounds.extend(beachMarker.getPosition());  
+          map.fitBounds(bounds);    
+          bounds.extend(beachMarkerentrega.getPosition());  
+          map.fitBounds(bounds); 
+            directionsDisplay.setMap(map);
+            directionsDisplay.setOptions( { suppressMarkers: true } );
+            directionsDisplay.setOptions({
+            polylineOptions: {
+                        strokeWeight: 4,
+                        strokeColor:  'blue'
+                    }
+            });
+
+          var ubicacionactual=latitud+","+longitud;
+        
+          var mediaLat=parseFloat(latitud)+parseFloat(lati);
+          var mediaLon=parseFloat(longitud)+parseFloat(longi);
+          mediaLat=mediaLat/2;
+          mediaLon=mediaLon/2;
+          map.setCenter(new google.maps.LatLng(mediaLat,mediaLon)); 
+          calculateAndDisplayRoute(directionsService, directionsDisplay,ubicacionactual,cordenadaentrega,inicial);
+        inabilitarloading();
+      }
+
+
+    function obtendatosserviciorecoleccion(servicio){
+    var urlconex = sessionStorage.getItem("urlconex");
+    var dataString="tracknumber="+servicio+"";
+    $.ajax({ 
+        type : "GET",
+        url : urlconex+"obtener_datos_servicio.php?"+dataString,
+        error : function() {
+            inabilitarloading();
+        },
+        success: function(data) {
+            var latitud="",longitud="";
+            var marcaini;
+            var tracknumber="";
+            var obj = JSON.parse(data);
+            var numserv=obj.servicios_generados.length;
+            for(var i=0;i<numserv;i++){
+                var razon_social=obj.servicios_generados[i].razon_social;
+                var EmpresaDestinatario=obj.servicios_generados[i].EmpresaDestinatario;
+                var peso=obj.servicios_generados[i].peso;
+                var cdorigen=obj.servicios_generados[i].calleorigen+" #"+obj.servicios_generados[i].noextorigen+" Col. "+obj.servicios_generados[i].coloniaorigen+", "+obj.servicios_generados[i].cdorigen;
+                var cddestino=obj.servicios_generados[i].calledestino+" #"+obj.servicios_generados[i].noextdestino+" Col. "+obj.servicios_generados[i].coloniadestino+", "+obj.servicios_generados[i].cddestino;
+document.getElementById("lblenviareciberec").innerHTML="<b>Envia:</b> "+razon_social+"<br><b>Recibe:</b> "+EmpresaDestinatario;
+document.getElementById("lblorigdesrec").innerHTML="<b>Origen:</b> "+cdorigen+"<br><br><b>Destino:</b> "+cddestino;
+document.getElementById("lblpesos").innerHTML="<b>Peso:</b> "+peso+" kg<br><b>Largo, Ancho y Alto:</b> "+obj.servicios_generados[i].largo+"cm X"+obj.servicios_generados[i].ancho+"cm X"+obj.servicios_generados[i].alto+"cm";
+            }
+            inabilitarloading();
+        }
+    });
+}
+    
+//funcion que pone el check de recoleccion    
+/*function js_actualiza_check(){
+    var servicio=document.getElementById("txtsetvicio").value;
+    var urlconex = sessionStorage.getItem("urlconex");
+    var latitud = sessionStorage.getItem("latitud");
+    var longitud = sessionStorage.getItem("longitud");
+    var idUsuarioInicioSesion = sessionStorage.getItem("idusuario");
+    var dataString="tracknumber="+servicio+"&idUsuario="+idUsuarioInicioSesion+"&latitud="+latitud+"&longitud="+longitud;
+      $.ajax({ 
+        type : "GET",
+        url : urlconex+"cambiar_estatus_servicio.php?"+dataString,
+        error : function() {
+            
+        },
+        success: function(data) {
+navigator.notification.alert(''+data,function(){},'Alert','Aceptar');
+            var latini = sessionStorage.getItem("latitud");
+            var longini = sessionStorage.getItem("longitud");
+            vermapa(latini,longini,""); 
+            inabilitarloading();
+        }
+    });
+    $("#idserviciosentrega li").each(function(){
+                var can = $(this).text();
+                if(can!="Recolecciones"){
+                    var id=this.getAttribute("id");
+                    $("#"+id).remove();
+
+                }
+            });
+    $("#idserviciosentrega").listview("refresh");
+    obtenserviciosrecoleccion();
+    obtenservicios(); 
+    setTimeout( function() {
+        location.href="servicios.html";        
+    }, 2000); 
+
+}*/
+ 
+//funcion que cambia el estatus a recoleccion    
+function js_inicia_ruta_recoleccion(){//Funcion para insertar el CheckPoint "EN RUTA DE RECOLECCION DE PAQUETE" Modificado Aldo 8 oct 2019
+    var servicio=document.getElementById("txtsetvicio").value;
+    var urlconex = sessionStorage.getItem("urlconex");
+    var latitud = sessionStorage.getItem("latitud");
+    var longitud = sessionStorage.getItem("longitud");
+    var idUsuarioInicioSesion = sessionStorage.getItem("idusuario");
+    var dataString="tracknumber="+servicio+"&idUsuario="+idUsuarioInicioSesion+"&latitud="+latitud+"&longitud="+longitud;    
+    $.ajax({ 
+        type : "GET",
+        url : urlconex+"cambiar_estatus_en_recoleccion.php?"+dataString,
+        error : function() {            
+            navigator.notification.alert('Error con conexion al servidor',function(){},'Error','Aceptar');
+        },
+        success: function(data) {
+            document.getElementById("abajo").style.display="none"; 
+            latitud = sessionStorage.getItem("latitud"); //recuperamos la ubicacion actual del afiliado para colocarnos ahi
+            longitud = sessionStorage.getItem("longitud");
+            var latlng = new google.maps.LatLng(latitud,longitud);
+            map.setCenter(latlng);
+            map.setZoom(18);
+        }
+    });
+}   
+    //funcion donde se inicia el servicio para entrega
+    function js_inicia_ruta_entrega(){ 
+    var servicio=document.getElementById("txtsetvicio").value;
+    var urlconex = sessionStorage.getItem("urlconex");
+    var latitud = sessionStorage.getItem("latitud");
+    var longitud = sessionStorage.getItem("longitud");
+    var idUsuarioInicioSesion = sessionStorage.getItem("idusuario");
+    var dataString="tracknumber="+servicio+"&idUsuario="+idUsuarioInicioSesion+"&latitud="+latitud+"&longitud="+longitud;    
+     $.ajax({ 
+        type : "GET", 
+        url : urlconex+"cambiar_estatus_en_entrega.php?"+dataString,
+        error : function() {            
+            navigator.notification.alert('Error con conexion al servidor',function(){},'Error','Aceptar');
+        },
+        success: function(data) {
+            document.getElementById("divabajoentrega").style.display="none";   
+            var latitud = sessionStorage.getItem("latitud"); //recuperamos la ubicacion actual del afiliado para colocarnos ahi
+            var longitud = sessionStorage.getItem("longitud");
+            var latlng = new google.maps.LatLng(latitud,longitud);
+            map.setCenter(latlng);
+            map.setZoom(18);        
+        }
+    });
+        
+}
+
+</script>

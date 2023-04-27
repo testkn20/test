@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blank Cordova Mobile App Template</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+    <style>
+        @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }          @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+        @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }                   @viewport { user-zoom: fixed ; min-zoom: 100% ; }
+    </style>
+    <!--Librerias JQUERY MOBILE 1.4.5 -->
+    <link rel="stylesheet" href="css/theme-konnen.min.css"/>
+    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css"/>
+    <link rel="stylesheet" href="jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css"/>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/sweet.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/js_funciones_mek.js"></script>
+    <script src="js/init-app.js"></script>
+    <script src="xdk/init-dev.js"></script>    
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>    
+    <div id="page1" data-role="page" data-rnc-jspage="paintPage">
+		<section id="content" data-role="content">
+			<canvas id="flexBox" width="900px" height="400px"></canvas>
+		</section>
+        <div id="div_datos" style="display:none">
+            <image id="theimage"></image>
+            <textarea name="base64" id="base64"></textarea>
+        </div>
+        
+        <p class="align-center">
+            <button type="button" id="id_btnScan" onclick="scan();">Scan</button>
+        </p>
+
+        <div class="align-center">
+            <input type="text" id="id_textArea" class="align-left" wrap="off" maxlength="20" placeholder="Codigo de barras"/>            
+        </div>
+        
+        <input type="button" data-icon="delete" value="Limpiar" onclick="js_limpiar_canvas();" />
+        <input type="button" data-icon="check" value="Guardar" onclick="js_guardar_canvas();" />               
+	</div>
+</body>
+</html>
+
+<script src="js/paintPage.js" type="text/javascript"></script>
+<script>
+var RocknCoder = RocknCoder || {};
+RocknCoder.Pages = RocknCoder.Pages || {};
+(function () {
+	"use strict";
+	RocknCoder.PageEvents = "pagebeforeshow pageshow pagebeforechange pagechange pagebeforehide pagehide";
+    
+	RocknCoder.Pages.Kernel = function (event) {
+		var that = this,
+			eventType = event.type,
+			pageName = $(this).attr("data-rnc-jspage");
+		if (RocknCoder && RocknCoder.Pages && pageName && RocknCoder.Pages[pageName] && RocknCoder.Pages[pageName][eventType]) {
+			RocknCoder.Pages[pageName][eventType].call(that);
+		}
+	};
+
+	(function () {
+		$("div[data-rnc-jspage]").on(
+			RocknCoder.PageEvents,
+			RocknCoder.Pages.Kernel
+		);
+	}());
+
+	(function () {
+		$(document).bind(
+			'pageload',
+			function (event, obj) {
+				console.log("pageload");
+				$("div[data-rnc-jspage]")
+					.off(RocknCoder.PageEvents)
+					.on(RocknCoder.PageEvents, RocknCoder.Pages.Kernel);
+			}
+		);
+	}());
+
+	RocknCoder.Dimensions = (function () {
+		var get = function () {
+			var isFirstPass = false,
+				isIPhone = (/iphone/gi).test(navigator.appVersion),
+				width = $(window).width(),
+				height = $(window).height() + (isIPhone ?  60 : 0),
+				hHeight = $('header').outerHeight(),
+				fHeight = $('footer').outerHeight();
+			return {
+				width: width,
+				height: height - hHeight - fHeight
+			};
+		};
+		return {
+			get: get
+		};
+	}());
+}());
+function js_limpiar_canvas(){
+    var canvas = document.getElementById("flexBox");
+    canvas.width=canvas.width;          
+    document.getElementById("theimage").src = null;
+}     
+function js_guardar_canvas(){
+  var canvas = document.getElementById("flexBox");  
+  var image = canvas.toDataURL();
+  document.getElementById("theimage").src = image;
+  document.getElementById('base64').value = image;
+  alert(image);
+  navigator.notification.alert('Se registro correctamente la entrega',function(){},'OK','Aceptar');  
+  js_limpiar_canvas();
+}
+    
+function scan() {
+    "use strict";
+    var fName = "scan():";
+    console.log(fName, "entry");
+    try {
+        if (window.tinyHippos) {
+            thirdPartyEmulator();
+            console.log(fName, "emulator alert");
+        } else {
+            cordova.plugins.barcodeScanner.scan(
+                function (result) {
+                    console.log(fName, "Scanned result found!");
+                    $("#id_textArea").val()=result.text;
+                },
+                function (error) {
+                    navigator.notification.alert('Scanning failed: '+error,function(){},'Error','Aceptar');
+                }
+            );
+        }
+    } catch (e) {
+        console.log(fName, "catch, failure");
+    }
+
+    console.log(fName, "exit");
+}    
+</script>
+<script src="http://hongru.github.io/proj/canvas2image/canvas2image.js"></script>

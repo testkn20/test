@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blank Cordova Mobile App Template</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <style>
+        @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }          @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+        @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }                   @viewport { user-zoom: fixed ; min-zoom: 100% ; }
+        a{
+          color: darkgrey !important;
+        }
+
+        a:hover{
+          color: dimgrey !important;
+        }
+        
+        #contOPC_Terminos{
+            padding-top: 215px !important;
+            text-align: center !important;
+        }
+
+    </style>
+    <!--Librerias JQUERY MOBILE 1.4.5 -->
+    <link rel="stylesheet" href="css/theme-konnen.min.css"/>
+    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css"/>
+    <link rel="stylesheet"  href="jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css"/>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/sweet.js"></script>
+    <script src="js/jquery.loadingModal.min.js"></script>
+    <link rel="stylesheet" href="css/jquery.loadingModal.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="cordova.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/init-app.js"></script>
+    <script src="xdk/init-dev.js"></script>
+    <script src="js/js_funciones_mek.js"></script>
+</head>  
+<body>
+    <div data-role="page" data-theme="c" id="t"> 
+        <div data-role="header" data-position='fixed'>
+            <center><img src="imagenes/e-konnen.png" /></center>
+        </div> 
+        <div data-role="content" class="ui-content">
+            <div class="ui-field-contain">                
+                <center><h2>MEK</h2></center>   
+                <label for="textUsuario">Usuario:</label>
+                <input type="text" name="textUsuario" id="textUsuario" placeholder="Usuario" value="" data-clear-btn="true">  
+            </div>
+            <div class="ui-field-contain"> 
+                 <label for="passUsuario">Password:</label>
+                 <input type="password" data-clear-btn="true" name="passUsuario" onkeypress="jsinicia(event);" id="passUsuario" value="" on placeholder="Password"> 
+            </div> 
+            <input type="button" data-inline="true" data-icon="check" data-iconpos="right" id="btnEntrar" value="Entrar" onclick="iniciarSesion();" data-ajax="false">
+            
+            <br> 
+            <br>
+            <div id="loading" style="display:none;">
+                <center>
+                <img src="imagenes/loading4.gif" />
+                </center>
+            </div>
+            <br> 
+            <br>
+            <div id="contOPC_Terminos">
+                <a href="http://34.235.249.54:83/legalMek/index.html">Términos y Condiciones</a>. <a href="http://34.235.249.54:83/legalMek/politica_mek.html">Política de privacidad.</a>
+            </div>
+        </div>
+        <div data-role="footer" data-position='fixed'>
+            <h1>K&ouml;nnen MEK 2019</h1>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    document.addEventListener('deviceready', function () {
+        obtenerTamaño();
+        var notificationOpenedCallback = function(jsonData) {
+            if(jsonData != null){
+                sessionStorage.setItem("notificacionServ", JSON.stringify(jsonData.notification.payload.additionalData.tracknumber).replace(/\"/g,""));
+                if(sessionStorage.getItem("notificacionServ") != "bar" && sessionStorage.getItem("notificacionServ") != null){
+                    sessionStorage.setItem("latEntrega", JSON.stringify(jsonData.notification.payload.additionalData.latEntrega).replace(/\"/g,""));     
+                    sessionStorage.setItem("longEntrega", JSON.stringify(jsonData.notification.payload.additionalData.longEntrega).replace(/\"/g,""));   
+                    sessionStorage.setItem("latRecoleccion", JSON.stringify(jsonData.notification.payload.additionalData.latRecoleccion).replace(/\"/g,""));
+                    sessionStorage.setItem("longRecoleccion", JSON.stringify(jsonData.notification.payload.additionalData.longRecoleccion).replace(/\"/g,"")); 
+                }
+            }            
+        };
+        window.plugins.OneSignal
+        .startInit 
+        ("8ca70fb8-61a0-4584-a303-86bc8de3c8de")
+        .handleNotificationOpened(notificationOpenedCallback)
+        .endInit();        
+    }, false);
+    
+    
+    $(document).ready(function () {
+        $('body').loadingModal({position: 'auto',text:'Loading...',color: '#fff',opacity: '0.9',backgroundColor: 'rgb(0,0,0)',animation: 'circle'});
+        obtenerTamaño();
+        sinLogeo();
+    });    
+        
+    
+    $(window).bind("orientationchange", function(event){		
+        if (event.orientation){
+            if(event.orientation=="landscape"){//horizontal
+                var tam = parseFloat(document.body.clientHeight);
+                sessionStorage.setItem("tamPant", ""+tam);    
+            }else if(event.orientation=="portrait"){//vertical
+                 var tam = parseFloat(document.body.clientHeight);
+                sessionStorage.setItem("tamPant", ""+tam);  
+            }
+        }		
+    });
+    
+    navigator.geolocation.getCurrentPosition(onSuccess, onError); 
+   
+    function obtenerTamaño(){ 
+        if (window.matchMedia("(orientation: portrait)").matches) {
+            var tam = parseFloat(document.body.clientHeight);
+            sessionStorage.setItem("tamPant", ""+tam);  
+        }else if (window.matchMedia("(orientation: landscape)").matches) {
+            var tam = parseFloat(document.body.clientHeight);
+            sessionStorage.setItem("tamPant", ""+tam); 
+        }
+    }
+    
+    
+    function jsinicia(e){
+        if (e.keyCode == 13) {
+          iniciarSesion();
+        }
+    }
+    document.getElementById("textUsuario").focus(); 
+    
+</script>

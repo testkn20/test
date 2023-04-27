@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blank Cordova Mobile App Template</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <style>
+        @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }          @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+        @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }                   @viewport { user-zoom: fixed ; min-zoom: 100% ; }
+    </style>
+    <!--Librerias JQUERY MOBILE 1.4.5 -->
+    <link rel="stylesheet" href="css/theme-konnen.min.css"/>
+    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css"/>
+    <link rel="stylesheet" href="jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css"/>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script type="application/javascript" src="js/funcionesIncidencia.js"></script>
+    <script src="js/jquery.loadingModal.min.js"></script>
+    <link rel="stylesheet" href="css/jquery.loadingModal.min.css">
+    <script src="cordova.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/js_funciones_mek.js"></script>
+    <script src="js/init-app.js"></script>
+    <script src="xdk/init-dev.js"></script>
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/hilo.js"></script>   
+    <script src="js/sweet.js"></script>
+</head>
+<body> 
+    <style type="text/css">
+        #txtincidencia-button{
+            top: 17px!important;
+            border-bottom-left-radius: 10px!important;
+            border-bottom-right-radius: 10px!important;
+            border-top-left-radius: 10px!important;
+            border-top-right-radius: 10px!important;
+        }
+        @media(max-width:768px){
+
+        }        
+        .ui-li-divider {
+            border-radius: 6px 6px 0px 0px !important;
+        }           
+        .contCard {
+            border-radius: 0px 0px 6px 6px;
+            background-color: #D9F0DF;
+            font-size: 15px;
+            font-family: arial;
+            padding-bottom: 2px;
+            padding-left: 10px;
+            margin-top: -12px;
+            padding-top: 5px;
+        }
+        .divListDivider{
+            font-size: 16px;
+            font-family: arial;
+        }
+        .divDetalleServ{
+            padding-top:20px;
+            padding-right:15px;               
+        }
+        .alineacionDerecha{
+            text-align: right;
+        }
+        .ui-collapsible-content {
+            padding-top: 0px;
+            border: none !important;
+            margin-top: -6.5px;
+            background-color: #c7faf1 !important;
+        }
+        .ui-collapsible-heading{
+            border-radius: 15px;
+        }
+        .ui-collapsible-themed-content:not(.ui-collapsible-collapsed)>.ui-collapsible-heading{
+            -webkit-border-bottom-right-radius: 15px;
+            -webkit-border-bottom-left-radius: 15px;
+        }
+
+        
+   </style>
+<div data-role="page" id="index" data-theme="c">        
+    <div data-role="header" data-position='fixed'>
+        <center><img src="imagenes/e-konnen.png" /></center>
+        <a href="#panelM" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all"></a>
+        <a href="#" onclick="location.href='servicios.html';" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all"></a>
+    </div>
+
+    <div data-role="content" class="ui-content">
+        <ul id="lista_servicios" data-role="listview" data-inset="true" data-shadow="false" data-filter="true" data-filter-placeholder="Buscar Mes" data-theme="d" data-divider-theme="a" style="padding:10px;">
+            <!-- 
+            <div data-role="collapsible" data-iconpos="right" data-inset="false">
+                <h4>Septiembre</h4>
+                <ul data-role="listview" data-inset="true">
+                    <li data-role="list-divider">
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a divListDivider">2019091922264740</div>
+                            <div class="ui-block-b divListDivider alineacionDerecha">Xpress</div>
+                        </div>
+                    </li>
+                    <div class="contCard" onclick="location.href='mapa_detalleHistorial.html';">
+                         <div class="ui-grid-a divDetalleServ" >
+                            <div class="ui-block-a">06/09/2019 14:30</div>
+                            <div class="ui-block-b alineacionDerecha" >$234.00</div>
+                        </div>                
+                        <p>Recolección: Col. los girasoles 23, Av. flores, calle prueba casa No.22 Cuernavaca Mor.</p>
+                        <p>Entrega: Col. los girasoles 23, Av. flores, calle prueba casa No.22 Tlanepantla de Baz Edo. Mex</p>
+                    </div>
+                </ul>
+            </div>
+            <div data-role="collapsible" data-iconpos="right" data-inset="false">
+                <h4>Octubre</h4>
+                <ul data-role="listview" data-inset="true">
+                    <li data-role="list-divider">
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a divListDivider">2019091922264740</div>
+                            <div class="ui-block-b divListDivider alineacionDerecha">Xpress</div>
+                        </div>
+                    </li>
+                    <div class="contCard" onclick="location.href='mapa_detalleHistorial.html';sessionStorage.setItem('numServicio', '2019091922264740');">
+                         <div class="ui-grid-a divDetalleServ" >
+                            <div class="ui-block-a">06/09/2019 14:30</div>
+                            <div class="ui-block-b alineacionDerecha" >$234.00</div>
+                        </div>                
+                        <p>Recolección: Col. los girasoles 23, Av. flores, calle prueba casa No.22 Cuernavaca Mor.</p>
+                        <p>Entrega: Col. los girasoles 23, Av. flores, calle prueba casa No.22 Tlanepantla de Baz Edo. Mex</p>
+                    </div>
+                </ul>
+              </div> -->
+          </ul>
+    </div>
+    
+    <div data-role="footer" data-position='fixed'>
+        <h1>K&ouml;nnen MEK 2019</h1>
+    </div>
+    <div id="panelM" data-role="panel" data-position="left" data-display="push" data-theme="d">  
+        <ul data-role="listview" id="menuinicial" name="menuinicial">
+            <li>
+                <center>Usuario: <div id="nombreuser"></div></center>
+                <div data-role="control-group" data-mini="true">                        
+                    <br>
+                    <center>
+                        <select name="flip_Estatus" id="flip_Estatus" data-role="flipswitch" data-theme="b" data-mini="true" onchange="evento_flipSwitchEstatus();">     
+                            <option value="off"></option>
+                            <option value="on"></option>
+                        </select>
+                        <label id="lblEstatus" style="display: inline;">Disponible</label>
+                    </center>
+                </div>
+            </li>
+            <li data-icon="bullets"><a href="#" onclick="location.href='servicios.html';">Inicio</a></li>
+            <li data-icon="clock"><a href="#" onclick="location.href='historial_servicios.html';">Historial de Servicios</a></li>
+            <li data-icon="bullets"><a href="#" onclick="location.href='menu_check.html';">Registro Movimientos</a></li>
+            <li data-icon="info"><a href="#" onclick="location.href='menu_legal.html';">Legal</a></li>         
+            <li data-icon="lock"><a href="#" onclick="cerrarSession();">Cerrar Sesi&oacute;n</a></li>
+        </ul>    
+    </div>
+</div>
+</body>
+</html>
+<script>
+    $(document).ready(function(){                       
+        document.addEventListener("online",intervalo_hilo,false);
+        document.addEventListener("online",intervalo,false);
+        
+        var sEstatusSession = sessionStorage.getItem("estatusSession");//Pedimos el valor de la ultimo valor del estatus nombreuser        
+        if(sEstatusSession == "1"){
+            sessionStorage.setItem("entraAPagina", "1");            
+            $("#flip_Estatus").val("on").flipswitch("refresh");
+        }else if(sEstatusSession == "0"){
+            document.getElementById("lblEstatus").innerHTML = "No Disponible";
+            $("#flip_Estatus").val("off").flipswitch("refresh");
+        }
+        
+        obtener_historial();
+    });
+    
+    
+    function obtener_historial(){
+        var urlconex = sessionStorage.getItem("urlconex");
+        var idafiliado = sessionStorage.getItem("idusuario");      
+        var dataString="idafiliado="+idafiliado+"";
+        var NombreMes = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];    
+        var sTracknumber = "", pago = "", tiposervicio = "", dir_recoleccion="", dir_entrega = "", fechaRegistro = "", iMes = 0, sMes = "", iAnio = 0;
+        var sMesActual = "";
+        var sLista = "";
+        $('body').loadingModal({position: 'auto',text:'Loading...',color: '#fff',opacity: '0.9',backgroundColor: 'rgb(0,0,0)',animation: 'circle'});
+        $.ajax({
+            type : "GET",
+            url : urlconex+"historial_servicios.php?"+dataString,		        
+            error : function() {
+                $('body').loadingModal('destroy');
+            },
+            success: function(data) {                
+                var obj = JSON.parse(data); 
+                if(obj==""){
+                    $('body').loadingModal('destroy') ;
+                }else{
+                    //inabilitarloading();
+                    $('body').loadingModal('destroy') ;
+                    //si existe servicios
+                    var iCantRow = obj.servicios.length;
+                    for(var i=0;i<iCantRow;i++){
+                        sTracknumber = obj.servicios[i].tracknumber;
+                        pago = obj.servicios[i].pago_afiliado;
+                        tiposervicio = obj.servicios[i].tipo_servicio;
+                        dir_recoleccion = obj.servicios[i].direccion_recoleccion;                
+                        dir_entrega = obj.servicios[i].direccion_entrega;
+                        fechaRegistro = obj.servicios[i].fechaRegistro_servicio;
+                        iMes = obj.servicios[i].Mes;
+                        iAnio = obj.servicios[i].Anio;
+                        sMes = NombreMes[iMes-1];
+                        //alert("sMesActual: "+ sMesActual+ " Mes: "+ sMes);
+                        //alert(tiposervicio);
+                        if(sMesActual == sMes){
+                            sLista += "<ul data-role=\"listview\" data-inset=\"true\" data-theme=\"b\">"+
+                                            "<li data-role=\"list-divider\">"+
+                                                "<div class=\"ui-grid-a\">"+
+                                                    "<div class=\"ui-block-a divListDivider\">"+sTracknumber+"</div>"+
+                                                    "<div class=\"ui-block-b divListDivider alineacionDerecha\">"+tiposervicio+"</div>"+
+                                                "</div>"+
+                                            "</li>"+
+                                            "<div class=\"contCard\" onclick=\"location.href='mapa_detalleHistorial.html';sessionStorage.setItem('numServicio', '"+sTracknumber+"');\">"+
+                                                 "<div class=\"ui-grid-a divDetalleServ\">"+
+                                                    "<div class=\"ui-block-a\">"+fechaRegistro+"</div>"+
+                                                    "<div class=\"ui-block-b alineacionDerecha\" >$"+pago+"</div>"+
+                                                "</div>"+
+                                                "<p>Recolección: "+dir_recoleccion+"</p>"+
+                                                "<p>Entrega: "+dir_entrega+"</p>"+
+                                            "</div>"+
+                                        "</ul>";  
+                        }else{                            
+                            if(sMesActual != "" ){ 
+                                //alert("Mes: "+sMes + " MesActual: "+sMesActual+ " cambio de mes pondra el div");
+                                sLista += "</div>"
+                            }
+                            sMesActual = sMes;
+                            sLista += "<div data-role=\"collapsible\" data-iconpos=\"right\" data-inset=\"false\" data-content-theme=\"a\">"+
+                                        "<h4>"+sMes+" " + iAnio + "</h4>"+
+                                        "<ul data-role=\"listview\" data-inset=\"true\" data-theme=\"b\">"+
+                                            "<li data-role=\"list-divider\">"+
+                                                "<div class=\"ui-grid-a\">"+
+                                                    "<div class=\"ui-block-a divListDivider\">"+sTracknumber+"</div>"+
+                                                    "<div class=\"ui-block-b divListDivider alineacionDerecha\">"+tiposervicio+"</div>"+
+                                                "</div>"+
+                                            "</li>"+
+                                            "<div class=\"contCard\" onclick=\"location.href='mapa_detalleHistorial.html';sessionStorage.setItem('numServicio', '"+sTracknumber+"');\">"+
+                                                 "<div class=\"ui-grid-a divDetalleServ\">"+
+                                                    "<div class=\"ui-block-a\">"+fechaRegistro+"</div>"+
+                                                    "<div class=\"ui-block-b alineacionDerecha\" >$"+pago+"</div>"+
+                                                "</div>"+
+                                                "<p>Recolección: "+dir_recoleccion+"</p>"+
+                                                "<p>Entrega: "+dir_entrega+"</p>"+
+                                            "</div>"+
+                                        "</ul>";                                  
+                        }
+                    }
+                    sLista += "</div>"
+                    //alert(sLista);
+                    $("#lista_servicios").append(sLista).collapsibleset().trigger('create');
+                    //document.getElementById("lista_servicios").innerHTML=sLista; 
+                    $('body').loadingModal('destroy') ;
+                }             
+            }        
+        });
+    }
+    
+
+    
+</script>
+
+<script type="text/javascript" charset="utf-8">    
+    var nombreusuario = sessionStorage.getItem("nombreuser");   
+    document.getElementById("nombreuser").innerHTML=""+nombreusuario; 
+</script>

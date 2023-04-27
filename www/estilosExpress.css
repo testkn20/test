@@ -1,0 +1,160 @@
+
+#id_btnScanFirmaExpress{
+
+
+    width: 71px;
+    height: 68px;
+  border-radius:100%;
+  background-color: #dbdbdb;
+  background-image: url(imagenes/firmar24.png);
+                                     
+    background-repeat: no-repeat;
+  
+   bottom:48.9px;
+  position:fixed;
+  
+ 
+ 
+  font-size:36px;
+
+ 
+    background-position-x: 50%;
+    background-position-y: 50%;
+}
+
+#btnGuardarEntregarExpress{
+ width: 0px;
+    height: 16px;
+    border-radius: 55%;
+  background-color: #dbdbdb;
+  background-image: url(imagenes/guardar.png);
+    background-repeat: no-repeat;
+    margin-left: 6%;
+   bottom:48.9px;
+  position:fixed;
+  
+ 
+ 
+  font-size:36px;
+ 
+
+      z-index: 255;  
+    background-position-x: 50%;
+    background-position-y: 50%;
+}
+
+#btnCancelarExpress{
+  width: 0px;
+    height: 16px;
+    border-radius: 55%;
+  background-color: #dbdbdb;
+  background-image: url(imagenes/cancelar.png);
+    background-repeat: no-repeat;
+ margin-left: 12%;
+  bottom:48.9px;
+  position:fixed;
+ 
+ bottom:48.9px;
+ 
+  font-size:36px;
+ 
+  
+      z-index: 255;  
+    background-position-x: 50%;
+    background-position-y: 50%;
+}
+
+#id_btnScanFirmaExpress:hover{
+   background-color: #b9b0b0;
+    
+}
+#btnGuardarEntregarExpress:hover{
+   background-color: #b9b0b0;
+    
+}
+#btnCancelarExpress:hover{
+   background-color: #b9b0b0;
+    
+}
+
+@media(min-width:110px){
+    #btnGuardarEntregarExpress{
+            margin-left: 8%!important;
+    }
+    #btnCancelarExpress{
+        margin-left: 16%!important;
+    }
+}
+@media(min-width:900px){
+    #btnGuardarEntregarExpress{
+            margin-left: 10%!important;
+    }
+    #btnCancelarExpress{
+        margin-left: 20%!important;
+    }
+}
+@media(max-width:800px){
+    #btnGuardarEntregarExpress{
+            margin-left: 20%!important;
+    }
+    #btnCancelarExpress{
+        margin-left: 40%!important;
+    }
+}
+
+@media(max-width:756px){
+    #este{
+        margin-left: -63%!important;;
+    }
+    #btnGuardarEntregarExpress{
+            margin-left: 20%!important;
+    }
+    #btnCancelarExpress{
+        margin-left: 40%!important;
+    }
+}
+@media(max-width:356px){
+    #este{
+        margin-left: -82%!important;;
+    }
+    #btnGuardarEntregarExpress{
+            margin-left: 25%!important;
+    }
+    #btnCancelarExpress{
+        margin-left: 50%!important;
+    }
+}
+@media(max-width:330px){
+    #este{
+        margin-left: -81%!important;
+    }
+    #btnGuardarEntregarExpress{
+            margin-left: 25%!important;
+    }
+    #btnCancelarExpress{
+        margin-left: 50%!important;
+    }
+}
+@media(max-width:1056px){
+    #este{
+        margin-left: -66%!important;
+    }
+    #btnGuardarEntregarExpress{
+            margin-left: 25%!important;
+    }
+    #btnCancelarExpress{
+        margin-left: 50%!important;
+    }
+}
+
+@media(max-width:1500px){
+    #este{
+        margin-left: -81%!important;
+    }
+    #btnGuardarEntregarExpress{
+            margin-left: 25%!important;
+    }
+    #btnCancelarExpress{
+        margin-left: 50%!important;
+    }
+}

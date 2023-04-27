@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html> 
+<head>
+    <title>Blank Cordova Mobile App Template</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+    <style>
+        @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }          @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+        @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }                   @viewport { user-zoom: fixed ; min-zoom: 100% ; }
+    </style>
+    
+    <!--Librerias JQUERY MOBILE 1.4.5 -->
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="css/theme-konnen.min.css"/>
+    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css"/>
+    <link rel="stylesheet" href="jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css"/>
+    <script type="text/javascript" src="jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/js_funciones_mek.js"></script>
+    <script src="js/init-app.js"></script>
+    <script src="xdk/init-dev.js"></script>
+    <script src="js/funcuinesCheckPoint.js"></script>
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/hilo.js"></script>
+    <script src="js/sweet.js"></script>
+</head>
+<body>
+    
+    <style type="text/css">
+        #txtincidencia-button{
+            top: 17px!important;
+            border-bottom-left-radius: 10px!important;
+            border-bottom-right-radius: 10px!important;
+            border-top-left-radius: 10px!important;
+            border-top-right-radius: 10px!important;
+        }
+        @media(max-width:768px){
+            
+        }
+        
+       
+        #id_btnScanFirma1{
+            width: 71px;
+            height: 68px;
+          border-radius:100%;
+          background-color: #dbdbdb;
+          background-image: url(imagenes/firmar24.png);
+            margin-left: 25%;
+            background-repeat: no-repeat;
+
+           bottom:109.9px;
+          position:fixed;
+
+
+
+          font-size:36px;
+
+
+            background-position-x: 50%;
+            background-position-y: 50%;
+        }
+        
+        #id_btnScanFirma1:hover{
+           background-color: #b9b0b0;
+        }
+    </style>
+     
+    <div id="page1" data-role="page" data-rnc-jspage="paintPage" data-theme="c">
+        <div data-role="header" data-position='fixed'>
+            <center><img src="imagenes/e-konnen.png" /></center>
+            <a href="#panelM" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all"></a>
+            <a href="#" onclick="location.href='servicios.html';" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all"></a>
+        </div>	
+        
+        <!-- julio 2020 -->
+        <div data-role="content" class="ui-content">
+            <div id="div_datos" style="display:none">
+                <image id="theimage"></image>
+                <textarea name="base64" id="base64"></textarea>
+            </div>
+          
+    <div style="
+       position: fixed;
+       width: 100%;
+       top:26px;
+       z-index: 25;
+       text-align: center;
+                margin-left: -19px">
+   <div style="
+    width: 20%;
+    display: inline-block;">
+    <button id="btnCancelar" style="  background-image: url(imagenes/cancelar.png); background-repeat: no-repeat;background-position-x: 50%;  background-position-y: 50%;     padding-top: 18px; padding-bottom: 25px;border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;"></button>
+   </div>
+ <div id="divSelect" style="
+    width: 48%;
+    display: inline-block;">
+       <select name="txtincidencia" id="txtincidencia">
+                <option value="">Selecciona..</option>                
+                <option value="ZZM03-Recoleccion de Paquete.">Recoleccion de Paquete</option>
+                <option value="ZZM04-En ruta de entrega de Paquete.">En ruta de entrega de Paquete</option>                    
+                </select>
+   </div>
+
+   <div style="
+    width: 20%;
+    display: inline-block">
+      <button id="btnGuardarEntregar" style=" background-image: url(imagenes/guardar.png); background-repeat: no-repeat;background-position-x: 50%;  background-position-y: 50%;     padding-top: 18px; padding-bottom: 25px;border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;" ></button>
+   </div>
+    </div>
+    </div>
+        <!-- -->
+        
+          <div data-role="content" class="ui-content">
+            <div id="div_datos" style="display:none">
+                <image id="theimage"></image>
+                <textarea name="base64" id="base64"></textarea>
+            </div>
+              
+            <!-- JULIO 2020 -->
+              <div data-role="content" class="ui-content">
+            <div id="div_datos" style="display:none">
+                <image id="theimage"></image>
+                <textarea name="base64" id="base64"></textarea>
+            </div>
+            <p class="align-center">
+                    <button type="button" data-iconpos="right" id="id_btnScan" data-icon="camera" onclick="scan();">Escanear Guia</button>
+                </p>
+                <div class="align-center">
+                    <input type="text" id="id_textArea" class="align-left" wrap="off" maxlength="20" onkeypress="js_obtendatos(event);" placeholder="Codigo de barras de la guia"/></div>
+           <ul id="listaGuias" data-role="listview"  data-filter-plasheldor="Buscar..." data-inset="true"  data-divider-theme="a">
+                <li style=" -webkit-border-bottom-left-radius: unset;
+    -webkit-border-bottom-right-radius: unset;" data-role="list-divider">Guias Capturadas <span style="float:right" ><span >Total:</span><span id="cantidadGuiasCapturadas"></span></span> </li>
+            </ul>
+            <div id="loading" style="display:none;">
+                    <input type="text" id="txtnumservicio" class="align-left" style="display:none;"/> 
+                    <input type="text" id="txtguia" class="align-left" style="display:none;"/> 
+                    <center>
+                    <img src="imagenes/loading4.gif" />
+                    </center>
+                </div>    
+        </div>
+            <!-- -->  
+              
+        </div>
+         <section id="content" data-role="content" style="display:none;">  
+             <div id="divInput" style="position: fixed;
+    width: 90%;
+    bottom: 58.9px;">
+            <input type="text" id="txtnombrerecibe" maxlength="40" placeholder="Nombre de la persona que recolecta" data-clear-btn="true"/>
+            <!--aqui este boton va amostrar un popu pantalla completa-->
+             </div>
+            
+<div data-role="popup" id="popupDialog" data-overlay-theme="b" data-theme="a" data-dismissible="false" style="max-width:400px;">
+    <div data-role="header" data-theme="a">
+    <h1>FIRMAR</h1>
+    </div>
+    <div role="main" class="ui-content" style=" margin-top: -49px;">
+      
+        <!-- PANEL DE LA FIRMA -->  
+            <div class=" ui-body-d ui-corner-all">
+                <center>
+                    <canvas id="flexBox" style="background:white; border:1px solid #000000; display:block;    width: 100%;
+                      height: 289px;"></canvas>
+                    <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <a href="#" onclick="js_limpiar_canvas_firma();" class="ui-btn ui-shadow ui-corner-all ui-icon-delete ui-btn-icon-left ui-btn-inline">Limpiar</a>
+                    </div>
+                </center>
+            </div>
+            
+               
+	
+    <p>Elija la acción que desee hacer</p>
+        <a href="#" id="btnCancelar2" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Aceptar</a>
+        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">Atras</a>
+    </div>
+</div>
+        
+ <a id="descargar" style="display:none">descarga</a>
+            <br>
+            <div class=" ui-body-d ui-corner-all" style="display:none">
+                <center>
+                    <canvas id="flexBox1" style="background:white; border:1px solid #000000; display:none;"></canvas>
+                    <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <a href="#" onclick="js_limpiar_canvas();" class="ui-btn ui-shadow ui-corner-all ui-icon-delete ui-btn-icon-left ui-btn-inline">Limpiar</a>
+                    </div>
+                </center>
+            </div>
+             <div id="este" >
+             <center>
+            <div data-role="controlgroup" data-type="horizontal" style="backgorund:red">
+                <a href="#popupDialog" id="id_btnScanFirma1" data-rel="popup" data-position-to="window" data-transition="pop" data-iconpos="right" id="id_btnScanFirma1" data-clear-btn="true"   title="Ingresar firma"  > </a>
+                <!--<button  id="btnGuardarEntregar" title="Registrar servicios"></button>
+                
+                 <button  id="btnCancelar" title="Cancelar servicios"></button>-->
+            </div>
+                 </center>
+             </div>
+		</section>
+        
+        <div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="a" data-dismissible="true" style="max-width:450px;">
+                <div data-role="header" data-theme="a">
+                <h2>Evidencia</h2>
+                </div>
+                <div role="main" class="ui-content">                    
+                    <img style="display:block;width:210px;height:190px;" id="smallImage" src="" />
+                    <img style="display:none;" id="largeImage" src="" />
+                    <input type="hidden" id="txtimgevidencia">               
+                    <a href="#" data-theme="a" data-role="button" data-icon="check" onclick="capturePhoto();">Capturar Foto</a>           
+                </div>
+        </div>
+        
+        <div data-role="footer" data-position='fixed'>
+            <h1>K&ouml;nnen MEK 2019</h1> 
+        </div>
+        
+        <div id="panelM" data-role="panel" data-position="left" data-display="push" data-theme="d">  
+            <ul data-role="listview" id="menuinicial" name="menuinicial">                                			  
+                <!-- <li><center>Usuario: <div id="nombreuser"></div></center></li>                
+                <li data-icon="bullets"><a href="#" onclick="location.href='servicios.html';">Mis Servicios</a></li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='menu_check.html';">Registro Movimientos</a></li>
+                <li data-icon="info"><a href="#" onclick="location.href='menu_legal.html';">Legal</a></li>
+	            <li data-icon="lock"><a href="#" onclick="cerrarSession();">Cerrar Sesi&oacute;n</a></li>  Cambio 25 oct 2019 Aldo-->
+                <li>
+                    <center>Usuario: <div id="nombreuser"></div></center>
+                    <div data-role="control-group" data-mini="true">                        
+                        <br>
+                        <center>
+                            <select name="flip_Estatus" id="flip_Estatus" data-role="flipswitch" data-theme="b" data-mini="true" onchange="evento_flipSwitchEstatus();">     
+                                <option value="off"></option>
+                                <option value="on"></option>
+                            </select>
+                            <label id="lblEstatus" style="display: inline;">Disponible</label>
+                        </center>
+                    </div>
+                </li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='servicios.html';">Inicio</a></li>
+                <li data-icon="clock"><a href="#" onclick="location.href='historial_servicios.html';">Historial de Servicios</a></li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='menu_check.html';">Registro Movimientos</a></li>
+                <li data-icon="info"><a href="#" onclick="location.href='menu_legal.html';">Legal</a></li>
+	            <li data-icon="lock"><a href="#" onclick="cerrarSession();">Cerrar Sesi&oacute;n</a></li>
+            </ul>    
+        </div>
+	</div>
+</body>
+</html>
+<script>  
+    $(document).ready(function(){
+        document.addEventListener("online",intervalo_hilo,false);
+        
+        var sEstatusSession = sessionStorage.getItem("estatusSession");//Pedimos el valor de la ultimo valor del estatus nombreuser        
+        if(sEstatusSession == "1"){
+            sessionStorage.setItem("entraAPagina", "1");            
+            $("#flip_Estatus").val("on").flipswitch("refresh");
+        }else if(sEstatusSession == "0"){
+            document.getElementById("lblEstatus").innerHTML = "No Disponible";
+            $("#flip_Estatus").val("off").flipswitch("refresh");
+        }
+        
+        $( "#txtincidencia" ).change(function() {
+            var check = $( "#txtincidencia" ).val();
+            if(check=="ZZM03-Recoleccion de Paquete."){
+                document.getElementById("content").style.display="block";
+            }else{
+                document.getElementById("content").style.display="none";
+                var canvas = document.getElementById("flexBox");
+                canvas.width=canvas.width;          
+                document.getElementById("theimage").src = null;
+                document.getElementById("txtnombrerecibe").value = "";
+                document.getElementById('smallImage').src="";
+            }
+        });
+    });
+</script>
+<script src="js/paintPage.js" type="text/javascript"></script>
+<script>
+var RocknCoder = RocknCoder || {};
+RocknCoder.Pages = RocknCoder.Pages || {};
+(function () {
+	"use strict";
+	RocknCoder.PageEvents = "pagebeforeshow pageshow pagebeforechange pagechange pagebeforehide pagehide";
+	RocknCoder.Pages.Kernel = function (event) {
+		var that = this,
+			eventType = event.type,
+			pageName = $(this).attr("data-rnc-jspage");
+		if (RocknCoder && RocknCoder.Pages && pageName && RocknCoder.Pages[pageName] && RocknCoder.Pages[pageName][eventType]) {
+			RocknCoder.Pages[pageName][eventType].call(that);
+		}
+	};
+
+	(function () {
+		$("div[data-rnc-jspage]").on(
+			RocknCoder.PageEvents,
+			RocknCoder.Pages.Kernel
+		);
+	}());
+
+	(function () {
+		$(document).bind(
+			'pageload',
+			function (event, obj) {
+				console.log("pageload");
+				$("div[data-rnc-jspage]")
+					// to make sure we aren't double hooking events clear them all
+					.off(RocknCoder.PageEvents)
+					// then hook them all  (the newly loaded page is in DOM at this point)
+					.on(RocknCoder.PageEvents, RocknCoder.Pages.Kernel);
+			}
+		);
+	}());
+
+	RocknCoder.Dimensions = (function () {
+		var get = function () {
+			var isFirstPass = false,
+				isIPhone = (/iphone/gi).test(navigator.appVersion),
+				width = $(window).width(),
+				height = $(window).height() + (isIPhone ?  60 : 0),
+				hHeight = $('header').outerHeight(),
+				fHeight = $('footer').outerHeight();
+			return {
+				width: width,
+				height: height - hHeight - fHeight
+			};
+		};
+		return {
+			get: get
+		};
+	}());
+}());
+    
+function abrirfirma(){
+    var idmov=document.getElementById("txtnumservicio").value;
+    var personsarecibe=document.getElementById("txtnombrerecibe").value;
+    if(idmov==""){
+      navigator.notification.alert('No existe información de la guia, favor de validar los datos.',function(){
+          document.getElementById("id_textArea").focus();
+      },'Error','Aceptar');  
+    }else if(personsarecibe==""){
+        navigator.notification.alert('Debe colocar el nombre de la persona que recibe',function(){
+          document.getElementById("txtnombrerecibe").focus();
+      },'Error','Aceptar'); 
+    }else{
+        document.getElementById("flexBox").style.display="block";    
+    }
+    
+}  
+
+/*Funcion que limpia el panel de firma y los componentes de la imagen de la evidencia*/
+function js_limpiar_canvas(){
+    var canvas = document.getElementById("flexBox");
+    canvas.width=canvas.width;          
+    document.getElementById("theimage").src = null;
+    document.getElementById("smallImage").src = "";
+    document.getElementById("largeImage").src = "";
+    document.getElementById("txtimgevidencia").value = "";
+    
+}   
+    
+/*Función para que no limpie los componentes de la imagen de la evidencia*/    
+function js_limpiar_canvas_firma(){
+    var canvas = document.getElementById("flexBox");
+    canvas.width=canvas.width;  
+}
+    
+function limpiarTodo(){
+    var canvas = document.getElementById("flexBox");
+    canvas.width=canvas.width;          
+    document.getElementById("theimage").src = null;
+    document.getElementById("txtnombrerecibe").value = "";
+    document.getElementById("id_textArea").value = "";    
+    document.getElementById("txtguia").value="";
+    document.getElementById("txtnumservicio").value="";
+    document.getElementById("txtnombrerecibe").value="";
+    document.getElementById("lblservicio").innerHTML="<b>Guia:</b> ";
+    document.getElementById("lbldestino").innerHTML="Destino:";
+    document.getElementById("lblempresa").innerHTML="Empresa:";
+    document.getElementById('base64').value = "";
+    document.getElementById('smallImage').src="";
+    location.href='servicios.html';
+}              
+    
+function limpiarTodoCampos(){
+    var canvas = document.getElementById("flexBox");
+    canvas.width=canvas.width;          
+    document.getElementById("theimage").src = null;
+    document.getElementById("txtnombrerecibe").value = "";
+    document.getElementById("id_textArea").value = "";    
+    document.getElementById("txtguia").value="";
+    document.getElementById("txtnumservicio").value="";
+    document.getElementById("txtnombrerecibe").value="";
+    document.getElementById("lblservicio").innerHTML="<b>Guia:</b> ";
+    document.getElementById("lbldestino").innerHTML="Destino:";
+    document.getElementById("lblempresa").innerHTML="Empresa:";
+    document.getElementById('base64').value = "";
+    document.getElementById('smallImage').src="";
+} 
+
+function js_guardar_canvas(){
+  var urlconex = sessionStorage.getItem("urlconex");
+  var idmov=document.getElementById("txtnumservicio").value;
+  var txtimgevidencia=document.getElementById("txtimgevidencia").value;
+  if(txtimgevidencia==""){
+  }    else{
+  }
+  
+  var nombrerecibe=document.getElementById("txtnombrerecibe").value.trim();
+  if(idmov==""){
+      navigator.notification.alert('No ha escaneado el codigo de barras de la guia',function(){
+          document.getElementById("id_textArea").focus();
+      },'Error','Aceptar');  
+  }else if(nombrerecibe==""){      
+      navigator.notification.alert('No ha capturado el nombre de la persona que recibe',function(){
+          document.getElementById("txtnombrerecibe").focus();
+      },'Error','Aceptar');  
+  }else{
+      /*var canvas = document.getElementById("flexBox");  
+      var image = canvas.toDataURL();   
+      document.getElementById("theimage").src = image;
+      document.getElementById('base64').value = image;
+      
+      var numbertrack=document.getElementById("txtguia").value;  
+      habilitarloading();
+      
+      $.ajax({
+		type : "POST",
+        data:{
+            idmov: idmov,
+            nombrerecibio:nombrerecibe,
+            firma:image,
+            numbertrack:numbertrack,
+            evidencia:txtimgevidencia
+        },
+		url : urlconex+"registro_entrega.php",		        
+		error : function() {
+            inabilitarloading();
+			navigator.notification.alert('Error con conexion al servidor',function(){},'Error','Aceptar');
+		},
+        success: function(data) {            
+            var datos=data.trim();
+            var exito="\"OK\"";
+            if(datos==exito){
+                navigator.notification.alert('Se registro correctamente la entrega',function(){
+                     js_limpiar_canvas();  
+                     location.href="servicios.html";    
+                },'OK','Aceptar'); 
+            }else{
+                navigator.notification.alert('No se guardaron los datos',function(){},'Error','Aceptar');      
+            }            
+            inabilitarloading();            
+        }
+	});*/
+  }  
+}
+    
+/*function scan() {
+    "use strict";
+    var fName = "scan():";
+    console.log(fName, "entry");
+    try {
+        if (window.tinyHippos) {
+            thirdPartyEmulator();
+            console.log(fName, "emulator alert");
+        } else {
+            cordova.plugins.barcodeScanner.scan(
+                function (result) {
+                    document.getElementById("id_textArea").value=result.text+"";
+                    console.log(fName, "Scanned result found!");
+                    agregarFilaAlaLista();
+                },
+                function (error) {
+                    navigator.notification.alert('Scanning failed: '+error,function(){},'Error','Aceptar');
+                }
+            );
+        }
+    } catch (e) {
+        console.log(fName, "catch, failure");
+    }
+    console.log(fName, "exit");
+}*/
+
+function scan() {
+    "use strict";
+    var fName = "scan():";
+    console.log(fName, "entry");
+    try {
+        if (window.tinyHippos) { 
+            thirdPartyEmulator();
+            console.log(fName, "emulator alert");
+        } else {
+            cordova.plugins.barcodeScanner.scan(
+                function (result) {
+                    document.getElementById("id_textArea").value=result.text+"";
+                    console.log(fName, "Scanned result found!");
+                    agregarFilaAlaLista();
+                },
+                function (error) {
+                    navigator.notification.alert('Scanning failed: '+error,function(){},'Error','Aceptar');
+                }
+            );
+        }
+    } catch (e) {
+        console.log(fName, "catch, failure");
+    }
+
+    console.log(fName, "exit");
+}  
+    
+/*function js_obtendatos(e){
+    if (e.keyCode == 13) {
+     agregarFilaAlaLista(); 
+    }
+}  */
+
+function js_obtendatos(e){
+    if (e.keyCode == 13) {
+     agregarFilaAlaLista();        
+    }
+}  
+    
+/*function obtener_datos(){
+    var urlconex = sessionStorage.getItem("urlconex");
+    var Tracknumber = document.getElementById("id_textArea").value;
+    if(Tracknumber!=""){
+        var dataString="Tracknumber="+Tracknumber+"";  
+        habilitarloading();
+        $.ajax({
+            type : "GET",
+            url : urlconex+"consulta_check.php?"+dataString,		        
+            error : function() {
+                inabilitarloading();
+                limpiarTodoCampos();
+                navigator.notification.alert('Error con conexion al servidor',function(){},'Error','Aceptar');
+            },
+            success: function(data) {  
+                var errorserv=data;
+                errorserv=errorserv.trim();
+                var erro="\"Error\"";   
+                var erro2="\"Guia Finalizada\"";   
+                if(errorserv==erro){
+                    inabilitarloading();
+                    limpiarTodoCampos();
+                    navigator.notification.alert('No se encontro el servicio favor de validarlo.',function(){},'Error','Aceptar');
+                }else if(errorserv==erro2){
+                    inabilitarloading();
+                    limpiarTodoCampos();
+                    navigator.notification.alert('La guia ya ha sido entregada.',function(){},'Alerta','Aceptar');
+                }else{
+                    inabilitarloading();
+                    var obj = JSON.parse(data);                       
+                    var numserv=obj.servicios_generados.length;                       
+                    for(var i=0;i<numserv;i++){
+                        var idmov=obj.servicios_generados[i].IdMov;
+                        var cdorigen=obj.servicios_generados[i].cdorigen;                
+                        var estaorigen=obj.servicios_generados[i].estaorigen;                
+                        var cddestino=obj.servicios_generados[i].cddestino;                
+                        var estadestino=obj.servicios_generados[i].estadestino; 
+                        var calledestino=obj.servicios_generados[i].calledestino; 
+                        var coloniadestino=obj.servicios_generados[i].coloniadestino; 
+                        var noextdestino=obj.servicios_generados[i].noextdestino; 
+
+                        var Tracknumber=obj.servicios_generados[i].Tracknumber; 
+                        var razon_social=obj.servicios_generados[i].razon_social;  
+                        
+                        document.getElementById("txtnumservicio").value=idmov;
+                        document.getElementById("txtguia").value=Tracknumber;
+                        document.getElementById("lblservicio").innerHTML="<b>Guia:</b> "+Tracknumber;
+                        document.getElementById("lbldestino").innerHTML="Destino: "+calledestino+" #"+noextdestino+" "+coloniadestino+" "+cddestino;
+                        document.getElementById("lblempresa").innerHTML="Empresa: "+razon_social;
+                    }                                     
+                }
+                inabilitarloading();
+                document.getElementById("id_textArea").value="";              
+            }
+        });
+    }    
+}*/
+function obtener_datos(){
+    var urlconex = sessionStorage.getItem("urlconex");
+    var Tracknumber = document.getElementById("id_textArea").value;    
+    if(Tracknumber!=""){
+        var dataString="Tracknumber="+Tracknumber+"";  
+        habilitarloading();
+        $.ajax({
+            type : "GET",
+            url : urlconex+"consulta_check.php?"+dataString,		        
+            error : function() {
+                inabilitarloading();
+                limpiarCampos();
+                navigator.notification.alert('Error con conexion al servidor',function(){},'Error','Aceptar');
+            },
+            success: function(data) {                    
+                var errorserv=data;
+                errorserv=errorserv.trim();
+                var erro="\"Error\"";        
+                var erro2="\"Guia Finalizada\"";   
+                if(errorserv==erro){
+                    limpiarCampos(); 
+                    navigator.notification.alert('No se encontro el servicio.',function(){},'Error','Aceptar');
+                }else if(errorserv==erro2){
+                    limpiarCampos();
+                    navigator.notification.alert('La guia ya ha sido entregada.',function(){},'Alerta','Aceptar');
+                }else{                            
+                    var obj = JSON.parse(data);               
+                    var numserv=obj.servicios_generados.length;                       
+                    for(var i=0;i<numserv;i++){
+                        var idmov=obj.servicios_generados[i].IdMov;
+                        var cdorigen=obj.servicios_generados[i].cdorigen;                
+                        var estaorigen=obj.servicios_generados[i].estaorigen;                
+                        var cddestino=obj.servicios_generados[i].cddestino;                
+                        var estadestino=obj.servicios_generados[i].estadestino; 
+                        var calledestino=obj.servicios_generados[i].calledestino; 
+                        var coloniadestino=obj.servicios_generados[i].coloniadestino; 
+                        var noextdestino=obj.servicios_generados[i].noextdestino; 
+                        var Tracknumber=obj.servicios_generados[i].Tracknumber; 
+                        var razon_social=obj.servicios_generados[i].razon_social; 
+                        
+                        document.getElementById("txtnumservicio").value=idmov;
+                        document.getElementById("txtguia").value=Tracknumber;
+                        document.getElementById("lblservicio").innerHTML="<b>Guia:</b> "+Tracknumber;
+                        document.getElementById("lbldestino").innerHTML="Destino: "+calledestino+" #"+noextdestino+" "+coloniadestino+" "+cddestino;
+                        document.getElementById("lblempresa").innerHTML="Empresa: "+razon_social;
+                    }                                     
+                }
+                inabilitarloading();
+                document.getElementById("id_textArea").value="";  
+            }
+        });
+    }    
+} 
+    
+/*var servicio = sessionStorage.getItem("servicioselecionado");
+if(servicio!=""){
+    document.getElementById("id_textArea").value=servicio;     
+     obtener_datos();
+     inabilitarloading();
+}*/
+    
+var servicio = sessionStorage.getItem("servicioselecionado");
+if(servicio!=""){
+    document.getElementById("id_textArea").value=servicio;     
+    obtener_datos();
+    inabilitarloading();
+}  
+    
+function cancelar(){    
+    document.getElementById("id_textArea").value = "";    
+    document.getElementById("txtguia").value="";
+    document.getElementById("txtnumservicio").value="";    
+    document.getElementById("lblservicio").innerHTML="<b>Guia:</b> ";
+    document.getElementById("lbldestino").innerHTML="Destino:";
+    document.getElementById("lblempresa").innerHTML="Empresa:";   
+    document.getElementById("txtimgevidencia").value = "";
+    document.getElementById('smallImage').src="";
+    location.href='servicios.html';
+}
+    
+function limpiarCampos(){
+    document.getElementById("id_textArea").value = "";    
+    document.getElementById("txtguia").value="";
+    document.getElementById("txtnumservicio").value="";    
+    document.getElementById("lblservicio").innerHTML="<b>Guia:</b> ";
+    document.getElementById("lbldestino").innerHTML="Destino:";
+    document.getElementById("lblempresa").innerHTML="Empresa:"; 
+    document.getElementById("txtimgevidencia").value = "";
+    document.getElementById('smallImage').src="";
+}
+    
+function guardar(){
+    var incidencia=document.getElementById("txtincidencia").value;
+    var guia=document.getElementById("txtguia").value;    
+    var txtimgevidencia=document.getElementById("txtimgevidencia").value;        
+    var urlconex = sessionStorage.getItem("urlconex");    
+    var dataString="Tracknumber="+guia+"&incidencia="+incidencia;  
+    if(guia==""){
+            navigator.notification.alert('Falta Escanear el No. Guia',function(){
+            document.getElementById("txtguia").focus();
+      },'Error','Aceptar');  
+    }else if(incidencia==""){
+        navigator.notification.alert('Falta Seleccionar Incidencia',function(){
+          document.getElementById("txtincidencia").focus();
+      },'Error','Aceptar'); 
+    }else{
+        habilitarloading();
+        $.ajax({
+            type : "POST",
+            data:{
+                Tracknumber: guia,
+                incidencia:incidencia,            
+                foto:txtimgevidencia
+            },
+            url : urlconex+"registrar_check.php?"+dataString,		        
+            error : function() {
+                inabilitarloading();
+                navigator.notification.alert('Error con conexion al servidor',function(){},'Error','Aceptar');
+            },
+            success: function(data) {            
+                var errorserv=data;
+                errorserv=errorserv.trim();
+                var erro="\"Error\"";            
+                if(errorserv==erro){
+                    navigator.notification.alert('No se encontro el servicio.',function(){},'Error','Aceptar');
+                }else{ 
+                    alert(data);
+                }
+                inabilitarloading();
+                document.getElementById("id_textArea").value="";  
+            }
+        });
+    }
+}  
+</script>
+
+<script type="text/javascript" charset="utf-8">
+    var pictureSource;
+    var destinationType;
+    
+    //document.addEventListener("deviceready",onDeviceReady,false);
+    document.addEventListener("deviceready",onDeviceReady2,false);
+    
+    /*function onDeviceReady() {
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+    }*/
+    function onDeviceReady2() {        
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+    }
+    
+    /*function onPhotoDataSuccess(imageData) {
+        var smallImage = document.getElementById('smallImage');
+        smallImage.style.display = 'block';
+        document.getElementById('txtimgevidencia').value=imageData;
+        smallImage.src = "data:image/jpeg;base64," + imageData;
+    }*/
+    function onPhotoDataSuccess(imageData) {
+        if(imageData!=null){
+              var smallImage = document.getElementById('smallImage');
+              smallImage.style.display = 'block';
+            document.getElementById('txtimgevidencia').value=imageData;
+              smallImage.src = "data:image/jpeg;base64," + imageData;
+        }else{
+            document.getElementById('txtimgevidencia').value="";
+        }
+    }
+    
+    /*function onPhotoURISuccess(imageURI) {
+        var largeImage = document.getElementById('largeImage');
+        largeImage.style.display = 'block';
+        largeImage.src = imageURI;
+    }*/
+    function onPhotoURISuccess(imageURI) {
+        var largeImage = document.getElementById('largeImage');
+        largeImage.style.display = 'block';
+      largeImage.src = imageURI;
+    }
+    
+    /*function capturePhoto() {
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+        navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 65,
+        destinationType: destinationType.DATA_URL, targetWidth:800, targetHeight:800 });
+    }*/
+    function capturePhoto() {
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 65,
+        destinationType: destinationType.DATA_URL, targetWidth:800, targetHeight:800 });
+    }
+    
+    /*function capturePhotoEdit() {
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
+        destinationType: destinationType.DATA_URL });
+    }*/
+    function capturePhotoEdit() {
+        navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
+        destinationType: destinationType.DATA_URL });
+    }
+
+    /*function getPhoto(source) {
+      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+        destinationType: destinationType.FILE_URI,
+        targetWidth: 500,
+        targetHeight: 500,
+        sourceType: source });
+    }
+    
+    function onFail(message) {
+      alert('Failed because: ' + message);
+    }*/
+    
+    function getPhoto(source) {
+      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+        destinationType: destinationType.FILE_URI,
+        targetWidth: 500,
+        targetHeight: 500,
+        sourceType: source });
+    }
+    
+    function onFail(message) {
+      alert('Failed because: ' + message);
+    }
+    
+    function mostrarInfo(){
+        var la=  sessionStorage.getItem("latitud");
+        var lo=sessionStorage.getItem("longitud");
+        alert("valores la " + la + " long " + lo);
+    }
+</script>
+
+<script src="http://hongru.github.io/proj/canvas2image/canvas2image.js"></script>//para guardar canvas en imagen
+<script>
+    /*var nombreusuario = sessionStorage.getItem("nombreuser");   
+    document.getElementById("nombreuser").innerHTML=""+nombreusuario;
+    inabilitarloading();*/
+    var nombreusuario = sessionStorage.getItem("nombreuser");   
+document.getElementById("nombreuser").innerHTML=""+nombreusuario;
+</script>

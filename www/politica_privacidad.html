@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blank Cordova Mobile App Template</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <style>
+        @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }          @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+        @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }                   @viewport { user-zoom: fixed ; min-zoom: 100% ; }
+        #contTerminos {
+            background-color: #FFFFFF;
+        }
+        .pTerminos {
+            text-align: justify;
+            font-size: 16px;
+            font-family: sans-serif;
+        }
+        .listTerminos {
+            list-style-type: square;
+            padding-left: 30px;
+        }
+        .ui-content {
+            padding-left: 7px !important;
+            padding-right: 7px !important;
+        }
+        #textoTerminos {
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+        }
+    </style>
+    <!--Librerias JQUERY MOBILE 1.4.5 -->
+    <link rel="stylesheet" href="css/theme-konnen.min.css"/>
+    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css"/>
+    <link rel="stylesheet" href="jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css"/>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
+   <script src="js/sweet.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/init-app.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/js_funciones_mek.js"></script>
+    <script src="xdk/init-dev.js"></script> 
+    <script src="js/hilo.js"></script>
+    <link rel="stylesheet" href="css/app.css">
+</head> 
+<body>   
+    <div data-role="page" id="index" data-theme="c"> 
+        <div data-role="header" data-position='fixed'>
+            <center><img src="imagenes/e-konnen.png" /></center>
+            <a href="#panelM" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all"></a>
+        </div> 
+        
+        <div data-role="content" class="ui-content">
+            <div class="ui-field-contain" id="contTerminos"> 
+                <div id="textoTerminos">
+                    <p><center><h2><strong>POLÍTICA DE PRIVACIDAD</strong></h2></center></p>
+                    <div>
+                        <div class="pTerminos">
+                            <p>
+                                Con fundamento en lo dispuesto por el artículo 8 de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares, que tiene por objeto la protección de los datos personales en posesión de los particulares, con la finalidad de regular su tratamiento legítimo, controlado e informado, a efecto de garantizar la privacidad y el derecho a la autodeterminación informativa de las personas, se advierte que los datos aquí entregados por el Titular serán incluidos en un archivo electrónico cuyo responsable es MEK Innovación Tecnológica en Logística., quien pone a su disposición el siguiente <strong>Aviso de Privacidad:</strong>
+                            </p>
+                            <p>
+                                A través de este instrumento, se informa a los titulares de los datos la información que de ellos se recaba y los fines que se le darán a dicha información para las finalidades que aquí se especifican.
+                            </p>
+                            <p>
+                                Usted tiene en todo momento el derecho de conocer qué datos personales tenemos de usted, para qué los utilizamos y las condiciones del uso que les damos (Acceso). Asimismo, es su derecho solicitar la corrección de su información personal en caso de que esté desactualizada, sea inexacta o incompleta (Rectificación); de igual manera, tiene derecho a que su información se elimine de nuestros registros o bases de datos cuando considere que la misma no está siendo utilizada adecuadamente (Cancelación); así como también a oponerse al uso de sus datos personales para fines específicos (Oposición). Estos derechos se conocen como derechos ARCO y para su ejercicio, se deberá presentar la solicitud respectiva mediante carta dirigida a esta compañía a MEK Innovación Tecnológica en Logística., con domicilio en calle Progreso, No. 4, Colonia Los Reyes, Tlalnepantla, Estado de México Código Postal 054073 o por vía electrónica a atencion.afiliados@e-konnen.com.
+                            </p>
+                            <p>
+                                Del mismo modo el Titular acuerda que en un futuro – incluso terminada nuestra relación comercial – MEK Innovación Tecnológica en Logística., utilice sus datos personales para informarle sobre sus productos y/o servicios. De la misma manera nos autoriza a enviarle información comercial a través de su cuenta de correo electrónico, así como otros medios electrónicos equivalentes salvo que exista oposición a ello en el momento de recopilar de sus datos. El Titular también acuerda, salvo que indique lo contrario, que, en el momento de recopilación de sus datos, le enviemos información sobre productos y/o servicios de terceros, así como la cesión a tales terceros de sus datos personales con idénticos fines publicitarios. Dichos terceros podrán pertenecer a los sectores de gran consumo; finanzas y seguros; organizaciones no gubernamentales; telecomunicaciones; y hostelería, turismo y transportes. En cualquier momento el Titular podrá oponerse a estos tratamientos, siguiendo las instrucciones incluidas en cada comunicación recibida o, en su defecto, escribiendo indicándolo a atencion.afiliados@e-konnen.com.
+                            </p>
+                            <p>
+                                En cualquier momento, usted puede revocar su consentimiento para el uso de sus datos personales. Del mismo modo, usted puede revocar el consentimiento que, en su caso, nos haya otorgado para el tratamiento de sus datos personales. Asimismo, usted deberá considerar que, para ciertos fines, la revocación de su consentimiento implicará que no podamos seguir prestando el servicio que nos solicitó, o la conclusión de su relación con nosotros.
+                            </p>
+                            <p><strong>Información general</strong></p>
+                            <p>
+                                Su privacidad es importante para nosotros. Para proteger su privacidad de la mejor manera, explicamos claramente el uso que hacemos de la información y las posibilidades que tiene con respecto a cómo se recopila, utiliza y comparte su información personal. Para que pueda acceder a esta información de manera sencilla, la mostramos en nuestra página de inicio y en cada apartado en el que se pueda solicitar información de carácter personal que pueda ser identificable.
+                            </p>
+                            <p><strong>¿Qué tipo de información recopilamos?</strong></p>
+                            <p>
+                                MEK recopila muchos tipos diferentes de información para poder operar de manera eficiente y ofrecerte los mejores productos, servicios y experiencias. Recopilamos información cuando se registra, accede y hace uso de nuestros sitios web y servicios de plataforma electrónica. Recopilamos la información de muchas maneras, como a partir de formularios web, tecnología como cookies, registro web (web login) o software que se encuentre en su ordenador o cualquier otro dispositivo.
+                            </p>
+                            <p><strong>¿Qué uso hacemos de su información personal?</strong></p>
+                            <p>
+                                La información que podemos recopilar durante la navegación por el sitio web la utilizamos con fines estadísticos, para operar, mejorar y personalizar los productos y servicios que ofrecemos. La información también se utiliza para ayudar a que la publicidad que puede ver en nuestros servicios sea más relevante.
+                            </p>
+                            <p>
+                                Al usar cualquier medio de contacto publicado en el sitio web, sea o no un formulario, utilizaremos la información que nos facilite para ponernos en contacto con usted y atenderle cuando se ponga en contacto con nosotros.
+                            </p>
+                            <p>
+                                Cuando se registra en el sitio web usamos su información para dar de alta su perfil de Titular y habilitar las herramientas y funcionalidades a que tiene acceso con ocasión de dicho registro, y para poder contactar con usted.
+                            </p>
+                            <p>
+                                Cuando contrata con MEK necesitamos su información para poder prestarle adecuadamente el servicio o desarrollar correctamente los fines que son objeto del contrato, así como para poder contactar con usted.
+                                No compartiremos su información personal con terceros.
+                            </p>
+                            <p><strong>Cómo acceder a su información personal</strong></p>
+                            <p>
+                                Algunos de los servicios de MEK le permiten consultar o modificar su información personal en línea. Para evitar que terceros puedan consultar su información personal, se le solicitará que el registro previamente.
+                            </p>
+                            <p><strong>Preferencias de comunicación</strong></p>
+                            <p>
+                                Puede detener el envío de cualquier futuro mensaje de correo electrónico promocional de los sitios web y servicios de MEK siguiendo las instrucciones que se indican en el mensaje de correo electrónico que reciba o escribiendo indicándolo a atencion.afiliados@e-konnen.com. Dependiendo del tipo de servicio, tendrá la opción de cambiar las preferencias en relación con la recepción de mensajes de correo electrónico promocionales, llamadas telefónicas y correo ordinario para determinados sitios web o servicios de MEK.
+                            </p>
+                            <p><strong>Cuenta MEK</strong></p>
+                            <p>
+                                Una cuenta MEK le permite registrarse en productos, sitios web y servicios de MEK. Cuando crea una cuenta MEK, le pedimos determinada información. Cuando se registra en un sitio web o servicio usando su cuenta MEK, recopilamos determinada información para comprobar su identidad en nombre del sitio web o servicio, para protegerle contra el uso malintencionado de su cuenta, y para salvaguardar la eficiencia y seguridad del servicio de cuentas MEK.
+                            </p>
+                        </div>
+                    </div> 
+                </div>
+            </div> 
+        </div>
+        <div data-role="footer" data-position='fixed'>
+            <h1>K&ouml;nnen MEK 2019</h1> 
+        </div> 
+        
+        <div id="panelM" data-role="panel" data-position="left" data-display="push" data-theme="d">  
+            <ul data-role="listview" id="menuinicial" name="menuinicial">                                			  
+                <!--<li><center>Usuario: <div id="nombreuser"></div></center></li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='servicios.html';">Mis Servicios</a></li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='menu_check.html';">Registro Movimientos</a></li>
+                <li data-icon="info"><a href="#" onclick="location.href='menu_legal.html';">Legal</a></li>
+                <li data-icon="lock"><a href="#" onclick="cerrarSession();">Cerrar Sesi&oacute;n</a></li> Cambio 25 oct 2019 Aldo -->
+                <li>
+                    <center>Usuario: <div id="nombreuser"></div></center>
+                    <div data-role="control-group" data-mini="true">
+                        <br>
+                        <center>
+                            <select name="flip_Estatus" id="flip_Estatus" data-role="flipswitch" data-theme="b" data-mini="true" onchange="evento_flipSwitchEstatus();">
+                                <option value="off"></option>
+                                <option value="on"></option>
+                            </select>
+                            <label id="lblEstatus" style="display: inline;">Disponible</label>
+                        </center>
+                    </div>
+                </li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='servicios.html';">Inicio</a></li>
+                <li data-icon="clock"><a href="#" onclick="location.href='historial_servicios.html';">Historial de Servicios</a></li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='menu_check.html';">Registro Movimientos</a></li>
+                <li data-icon="info"><a href="#" onclick="location.href='menu_legal.html';">Legal</a></li>
+	            <li data-icon="lock"><a href="#" onclick="cerrarSession();">Cerrar Sesi&oacute;n</a></li>
+            </ul>    
+        </div>
+    </div>
+</body>
+</html>
+<script>
+   $(document).ready(function(){
+        document.addEventListener("online",intervalo_hilo,false);
+       
+        var sEstatusSession = sessionStorage.getItem("estatusSession");//Pedimos el valor de la ultimo valor del estatus nombreuser        
+        if(sEstatusSession == "1"){
+            sessionStorage.setItem("entraAPagina", "1");            
+            $("#flip_Estatus").val("on").flipswitch("refresh");
+        }else if(sEstatusSession == "0"){
+            document.getElementById("lblEstatus").innerHTML = "No Disponible";
+            $("#flip_Estatus").val("off").flipswitch("refresh");
+        }
+    });
+</script>
+<script>
+    sessionStorage.setItem("servicioselecionado", '');
+    var nombreusuario = sessionStorage.getItem("nombreuser");   
+    document.getElementById("nombreuser").innerHTML=""+nombreusuario;
+</script>

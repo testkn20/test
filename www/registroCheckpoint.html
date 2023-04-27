@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blank Cordova Mobile App Template</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <style>
+        @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }          @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+        @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }                   @viewport { user-zoom: fixed ; min-zoom: 100% ; }
+    </style>
+    <!--Librerias JQUERY MOBILE 1.4.5 -->
+    <link rel="stylesheet" href="css/theme-konnen.min.css"/>
+    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css"/>
+    <link rel="stylesheet" href="jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css"/>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/js_funciones_mek.js"></script>
+    <script src="js/init-app.js"></script>
+    <script src="xdk/init-dev.js"></script>
+    <script src="js/hilo.js"></script>
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>  
+<div data-role="page" id="index" data-theme="c"> 
+        <div data-role="header" data-position='fixed'>
+            <center><img src="imagenes/e-konnen.png" /></center>
+            <a href="#panelM" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all"></a>
+            <a href="#" onclick="location.href='servicios.html';" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all"></a>
+        </div> 
+    
+        <div data-role="content" class="ui-content">
+            <div id="div_datos" style="display:none">
+                <image id="theimage"></image>
+                <textarea name="base64" id="base64"></textarea>
+            </div>
+                  
+                <label><h4><b>Incidencias</b></h4></label>
+                <p class="align-center">
+                    <button type="button" data-iconpos="right" id="id_btnScan" data-icon="camera" onclick="scan();">Escanear Guia</button>
+                </p>
+                <div class="align-center">
+                    <input type="text" id="id_textArea" class="align-left" wrap="off" maxlength="20" onkeypress="js_obtendatos(event);" placeholder="Codigo de barras de la guia"/></div>
+                <label id="lblservicio"><b>Guia:</b></label>
+                <label id="lblempresa">Empresa:</label> 
+                <label id="lbldestino">Destino:</label>   
+                <br/>
+                <label><b>Checkpoint:</b></label>
+                <select name="txtincidencia" id="txtincidencia">
+                <option value="">Selecciona..</option>                          
+                <option value="ZZM05-RECHAZADO POR CLIENTE ENTREGA">RECHAZADO POR CLIENTE ENTREGA</option>                
+                <option value="ZZM06-CLIENTE AUSENTE">CLIENTE AUSENTE</option>                
+                <option value="ZZM07-DOMICILIO INCORRECTO">DOMICILIO INCORRECTO</option>                
+                <option value="ZZM08-DOMICILIO INACCESIBLE">DOMICILIO INACCESIBLE</option>
+                <option value="ZZM10-NUNCA LLEGÓ A SU DESTINO">NUNCA LLEGÓ A SU DESTINO</option>
+                <option value="ZZM11-SE VOLVIÓ A INTENTAR LA ENTREGA">SE VOLVIÓ A INTENTAR LA ENTREGA</option>
+                </select>
+                <a href='#popupDialog' data-rel='popup' data-role='button' data-position-to='window' data-transition='pop' class="ui-btn ui-shadow ui-corner-all ui-icon-camera ui-btn-icon-left ui-btn-inline">Evidencia</a><br><br>
+                <input data-iconpos="right" type="button" data-icon="delete" value="Cancelar" onclick="cancelar();" />
+                <input data-iconpos="right" type="button" data-icon="check" value="Guardar" onclick="guardar();" />               
+                <div id="loading" style="display:none;">
+                    <input type="text" id="txtnumservicio" class="align-left" style="display:none;"/> 
+                    <input type="text" id="txtguia" class="align-left" style="display:none;"/> 
+                    <center>
+                    <img src="imagenes/loading4.gif" />
+                    </center>
+                </div>
+        </div>
+    
+        <div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="a" data-dismissible="true" style="max-width:450px;">
+                <div data-role="header" data-theme="a">
+                <h2>Evidencia</h2>
+                </div>
+                <div role="main" class="ui-content">                    
+                    <img style="display:block;width:210px;height:190px;" id="smallImage" src="" />
+                    <img style="display:none;" id="largeImage" src="" />
+                    <input type="hidden" id="txtimgevidencia">               
+                    <a href="#" data-theme="a" data-role="button" data-icon="check" onclick="capturePhoto();">Capturar Foto</a>           
+                </div>
+        </div>
+    
+        <div data-role="footer" data-position='fixed'>
+            <h1>K&ouml;nnen MEK 2019</h1> 
+        </div> 
+        
+        <div id="panelM" data-role="panel" data-position="left" data-display="push" data-theme="d">  
+            <ul data-role="listview" id="menuinicial" name="menuinicial">                                			  
+                <li><center>Usuario: <div id="nombreuser"></div></center></li>                
+                <li data-icon="bullets"><a href="#" onclick="location.href='servicios.html';">Mis Servicios</a></li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='menu_check.html';">Registro Movimientos</a></li>
+                <li data-icon="info"><a href="#" onclick="location.href='menu_legal.html';">Legal</a></li>
+                <li data-icon="lock"><a href="#" onclick="cerrarSession();">Cerrar Sesi&oacute;n</a></li>            
+            </ul>    
+        </div>
+    </div>
+</body>
+</html>
+<script>
+   $(document).ready(function(){
+        document.addEventListener("online",intervalo_hilo,false);
+    });
+</script>
+
+<script type="text/javascript" charset="utf-8">
+    var pictureSource;   
+    var destinationType; 
+    
+    document.addEventListener("deviceready",onDeviceReady2,false);
+    
+    function onDeviceReady2() {        
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+    }
+
+    function onPhotoDataSuccess(imageData) {
+        if(imageData!=null){
+              var smallImage = document.getElementById('smallImage');
+            smallImage.style.display = 'block';
+            document.getElementById('txtimgevidencia').value=imageData;
+            smallImage.src = "data:image/jpeg;base64," + imageData;
+        }else{
+            document.getElementById('txtimgevidencia').value="";
+        }
+    }
+
+    function onPhotoURISuccess(imageURI) {
+        var largeImage = document.getElementById('largeImage');
+        largeImage.style.display = 'block';
+        largeImage.src = imageURI;
+    }
+
+    function capturePhoto() {
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 65,
+        destinationType: destinationType.DATA_URL, targetWidth:800, targetHeight:800 });
+    }
+
+    function capturePhotoEdit() {
+        navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
+        destinationType: destinationType.DATA_URL });
+    }
+
+    function getPhoto(source) {
+      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+        destinationType: destinationType.FILE_URI,
+        targetWidth: 500,
+        targetHeight: 500,
+        sourceType: source });
+    }
+    
+    function onFail(message) {
+      alert('Failed because: ' + message);
+    }
+
+var nombreusuario = sessionStorage.getItem("nombreuser");   
+document.getElementById("nombreuser").innerHTML=""+nombreusuario;
+
+function cancelar(){
+    document.getElementById("id_textArea").value = "";    
+    document.getElementById("txtguia").value="";
+    document.getElementById("txtnumservicio").value="";    
+    document.getElementById("lblservicio").innerHTML="<b>Guia:</b> ";
+    document.getElementById("lbldestino").innerHTML="Destino:";
+    document.getElementById("lblempresa").innerHTML="Empresa:";   
+    document.getElementById("txtimgevidencia").value = "";
+    document.getElementById('smallImage').src="";
+    location.href='servicios.html';
+}
+    
+function limpiarCampos(){
+    document.getElementById("id_textArea").value = "";    
+    document.getElementById("txtguia").value="";
+    document.getElementById("txtnumservicio").value="";    
+    document.getElementById("lblservicio").innerHTML="<b>Guia:</b> ";
+    document.getElementById("lbldestino").innerHTML="Destino:";
+    document.getElementById("lblempresa").innerHTML="Empresa:"; 
+    document.getElementById("txtimgevidencia").value = "";
+    document.getElementById('smallImage').src="";
+}
+ 
+function guardar(){
+    var incidencia=document.getElementById("txtincidencia").value;
+    var guia=document.getElementById("txtguia").value;    
+    var txtimgevidencia=document.getElementById("txtimgevidencia").value;        
+    var urlconex = sessionStorage.getItem("urlconex");    
+    var dataString="Tracknumber="+guia+"&incidencia="+incidencia;  
+    if(guia==""){
+            navigator.notification.alert('Falta Escanear el No. Guia',function(){
+            document.getElementById("txtguia").focus();
+      },'Error','Aceptar');  
+    }else if(incidencia==""){
+        navigator.notification.alert('Falta Seleccionar Incidencia',function(){
+          document.getElementById("txtincidencia").focus();
+      },'Error','Aceptar'); 
+    }else{
+        habilitarloading();
+        $.ajax({
+            type : "POST",
+            data:{
+                Tracknumber: guia,
+                incidencia:incidencia,            
+                foto:txtimgevidencia
+            },
+            url : urlconex+"registrar_incidencia.php?"+dataString,		        
+            error : function() {
+                inabilitarloading();
+                navigator.notification.alert('Error con conexion al servidor',function(){},'Error','Aceptar');
+            },
+            success: function(data) {            
+                var errorserv=data;
+                errorserv=errorserv.trim();
+                var erro="\"Error\"";            
+                if(errorserv==erro){
+                    navigator.notification.alert('No se encontro el servicio.',function(){},'Error','Aceptar');
+                }else{  
+                    alert(data);
+                }
+                inabilitarloading();
+                document.getElementById("id_textArea").value="";  
+            }
+        });
+    }
+    
+}    
+    
+function js_obtendatos(e){
+    if (e.keyCode == 13) {
+      obtener_datos();        
+    }
+}    
+    
+function obtener_datos(){
+    var urlconex = sessionStorage.getItem("urlconex");
+    var Tracknumber = document.getElementById("id_textArea").value;    
+    if(Tracknumber!=""){
+        var dataString="Tracknumber="+Tracknumber+"";  
+        habilitarloading();
+        $.ajax({
+            type : "GET",
+            url : urlconex+"consulta_check.php?"+dataString,		        
+            error : function() {
+                inabilitarloading();
+                limpiarCampos();
+                navigator.notification.alert('Error con conexion al servidor',function(){},'Error','Aceptar');
+            },
+            success: function(data) {            
+                var errorserv=data;
+                errorserv=errorserv.trim();
+                var erro="\"Error\"";       
+                var erro2="\"Guia Finalizada\"";   
+                if(errorserv==erro){
+                    limpiarCampos(); 
+                    navigator.notification.alert('No se encontro el servicio.',function(){},'Error','Aceptar');
+                }else if(errorserv==erro2){
+                    limpiarCampos();
+                    navigator.notification.alert('La guia ya ha sido entregada.',function(){},'Alerta','Aceptar');
+                }else{                            
+                    var obj = JSON.parse(data);               
+                    var numserv=obj.servicios_generados.length;                       
+                    for(var i=0;i<numserv;i++){
+                        var idmov=obj.servicios_generados[i].IdMov;
+                        var cdorigen=obj.servicios_generados[i].cdorigen;                
+                        var estaorigen=obj.servicios_generados[i].estaorigen;                
+                        var cddestino=obj.servicios_generados[i].cddestino;                
+                        var estadestino=obj.servicios_generados[i].estadestino; 
+                        var calledestino=obj.servicios_generados[i].calledestino; 
+                        var coloniadestino=obj.servicios_generados[i].coloniadestino; 
+                        var noextdestino=obj.servicios_generados[i].noextdestino; 
+                        var Tracknumber=obj.servicios_generados[i].Tracknumber; 
+                        var razon_social=obj.servicios_generados[i].razon_social; 
+                        
+                        document.getElementById("txtnumservicio").value=idmov;
+                        document.getElementById("txtguia").value=Tracknumber;
+                        document.getElementById("lblservicio").innerHTML="<b>Guia:</b> "+Tracknumber;
+                        document.getElementById("lbldestino").innerHTML="Destino: "+calledestino+" #"+noextdestino+" "+coloniadestino+" "+cddestino;
+                        document.getElementById("lblempresa").innerHTML="Empresa: "+razon_social;
+                    }                                     
+                }
+                inabilitarloading();
+                document.getElementById("id_textArea").value="";  
+            }
+        });
+    }    
+}   
+    
+function scan() {
+    "use strict";
+    var fName = "scan():";
+    console.log(fName, "entry");
+    try {
+        if (window.tinyHippos) { 
+            thirdPartyEmulator();
+            console.log(fName, "emulator alert");
+        } else {
+            cordova.plugins.barcodeScanner.scan(
+                function (result) {
+                    document.getElementById("id_textArea").value=result.text+"";
+                    console.log(fName, "Scanned result found!");
+                    obtener_datos();
+                },
+                function (error) {
+                    navigator.notification.alert('Scanning failed: '+error,function(){},'Error','Aceptar');
+                }
+            );
+        }
+    } catch (e) {
+        console.log(fName, "catch, failure");
+    }
+
+    console.log(fName, "exit");
+}   
+
+var servicio = sessionStorage.getItem("servicioselecionado");
+if(servicio!=""){
+    document.getElementById("id_textArea").value=servicio;     
+     obtener_datos();
+     inabilitarloading();
+}    
+</script>

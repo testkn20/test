@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blank Cordova Mobile App Template</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <style>
+        @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }          @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+        @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }                   @viewport { user-zoom: fixed ; min-zoom: 100% ; }
+    </style>
+    <!--Librerias JQUERY MOBILE 1.4.5 -->
+    <link rel="stylesheet" href="css/theme-konnen.min.css"/>
+    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css"/>
+    <link rel="stylesheet" href="jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css"/>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
+   <script src="js/sweet.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/init-app.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/js_funciones_mek.js"></script>
+    <script src="xdk/init-dev.js"></script> 
+    <script src="js/hilo.js"></script>
+    <link rel="stylesheet" href="css/app.css">
+</head> 
+<body>   
+    <div data-role="page" id="index" data-theme="c"> 
+        <div data-role="header" data-position='fixed'>
+            <center><img src="imagenes/e-konnen.png" /></center>
+            <a href="#panelM" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all"></a>
+        </div> 
+        
+        <div data-role="content" class="ui-content">
+            <div class="ui-field-contain"> 
+                <center><h3>Información Legal</h3></center> 
+                <ul data-role="listview" data-inset="true" class="ui-nodisc-icon ui-alt-icon">
+                    <li><a href="#" onclick="location.href='terminos_condiciones.html';">Términos y Condiciones MEK</a></li>
+                    <li><a href="#" onclick="location.href='politica_privacidad.html';">Política de privacidad afiliados MEK</a></li>
+                </ul>
+            </div> 
+        </div>
+        <div data-role="footer" data-position='fixed'>
+            <h1>K&ouml;nnen MEK 2019</h1> 
+        </div> 
+        
+        <div id="panelM" data-role="panel" data-position="left" data-display="push" data-theme="d">  
+            <ul data-role="listview" id="menuinicial" name="menuinicial">                                			  
+                <!--<li><center>Usuario: <div id="nombreuser"></div></center></li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='servicios.html';">Mis Servicios</a></li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='menu_check.html';">Registro Movimientos</a></li>
+                <li data-icon="info"><a href="#" onclick="location.href='menu_legal.html';">Legal</a></li>
+                <li data-icon="lock"><a href="#" onclick="cerrarSession();">Cerrar Sesi&oacute;n</a></li>     Cambio 25 Oct 2019 Aldo-->
+                <li>
+                    <center>Usuario: <div id="nombreuser"></div></center>
+                    <div data-role="control-group" data-mini="true">                        
+                        <br>
+                        <center>
+                            <select name="flip_Estatus" id="flip_Estatus" data-role="flipswitch" data-theme="b" data-mini="true" onchange="evento_flipSwitchEstatus();">     
+                                <option value="off"></option>
+                                <option value="on"></option>
+                            </select>
+                            <label id="lblEstatus" style="display: inline;">Disponible</label>
+                        </center>
+                    </div>
+                </li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='servicios.html';">Inicio</a></li>
+                <li data-icon="clock"><a href="#" onclick="location.href='historial_servicios.html';">Historial de Servicios</a></li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='menu_check.html';">Registro Movimientos</a></li>
+                <li data-icon="info"><a href="#" onclick="location.href='menu_legal.html';">Legal</a></li>
+	            <li data-icon="lock"><a href="#" onclick="cerrarSession();">Cerrar Sesi&oacute;n</a></li>
+            </ul>    
+        </div>
+    </div>
+</body>
+</html>
+<script>
+   $(document).ready(function(){
+        document.addEventListener("online",intervalo_hilo,false);
+        
+        var sEstatusSession = sessionStorage.getItem("estatusSession");//Pedimos el valor de la ultimo valor del estatus nombreuser        
+        if(sEstatusSession == "1"){
+            sessionStorage.setItem("entraAPagina", "1");            
+            $("#flip_Estatus").val("on").flipswitch("refresh");
+        }else if(sEstatusSession == "0"){
+            document.getElementById("lblEstatus").innerHTML = "No Disponible";
+            $("#flip_Estatus").val("off").flipswitch("refresh");
+        }
+    });
+</script>
+<script>
+     sessionStorage.setItem("servicioselecionado", '');
+    var nombreusuario = sessionStorage.getItem("nombreuser");   
+    document.getElementById("nombreuser").innerHTML=""+nombreusuario;
+</script>

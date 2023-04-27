@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blank Cordova Mobile App Template</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+    <style>
+        @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }          @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+        @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }                   @viewport { user-zoom: fixed ; min-zoom: 100% ; }
+    </style>
+    <!--Librerias JQUERY MOBILE 1.4.5 -->
+    <link rel="stylesheet" href="css/theme-konnen.min.css"/>
+    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css"/>
+    <link rel="stylesheet" href="jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css"/>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/js_funciones_mek.js"></script>
+    <script src="js/init-app.js"></script>
+    <script src="xdk/init-dev.js"></script>
+    <script src="js/hilo.js"></script>
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>  
+<div data-role="page" id="index" data-theme="c"> 
+        <div data-role="header" data-position='fixed'>
+            <center><img src="imagenes/e-konnen.png" /></center>
+            <a href="#panelM" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all"></a>
+        </div> 
+        <div data-role="collapsible-set" id="set" data-theme="a" data-content-theme="a" style="position:fixed; z-index: 99; opacity:0.85">     
+            <div data-role="collapsible">
+            <h2>Recolecciones</h2>
+                <ul data-role="listview" data-count-theme="c" data-filter="true" id="idserviciosentrega" name="idserviciosentrega" data-filter-placeholder="Buscar Servicio.." data-inset="true">   
+                    <li><a href='#' onclick='#'>Mi ubicacion - Azcapotzalco</a></li>
+                </ul>
+            </div>
+            <div data-role="collapsible" id="dtr_entregas">
+            <h2>Ruta de Entrega</h2>  
+                 <ul data-role="listview" data-count-theme="c" data-filter="true" id="idservicios" name="idservicios" data-filter-placeholder="Buscar Servicio.." data-inset="true">   
+                </ul>                
+            </div>             
+        </div>            
+        <div id="abajo" style="position:fixed; z-index: 9; opacity:0.75; margin-top:580px;">
+                    <fieldset data-role="controlgroup" data-type="horizontal">                         
+                       <a href="#" id="lbltiempo" data-role="button" data-icon="clock">0 min</a>
+                       <a href="#" id="lbldistancia" data-role="button" data-icon="location">0 mts</a>    
+                       <a href='#popupDialog' data-rel='popup' data-role='button' data-position-to='window' data-transition='pop' ><label id="lblnoservicio"></label></a>                                             -->
+                    </fieldset>
+        </div>
+          
+        <input type="hidden" id="latserviciodestino">
+        <input type="hidden" id="longserviciodestino">
+        <input type="hidden" id="txtsetvicio">
+    
+        <div id="map" style="width:100%;height:650px;"></div>
+        <div id="loading" style="display:none;">
+                <center>
+                <img src="imagenes/loading4.gif" />
+                </center>
+        </div>
+    
+            <div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="a" data-dismissible="true" style="max-width:450px;">
+                <div data-role="header" data-theme="a">
+                <h2>Detalle</h2>
+                </div>
+                <div role="main" class="ui-content">
+                    <h3 class="ui-title"><label id="lblservi"></label></h3>
+                    <h3 class="ui-title"><label id="lblenviarecibe"></label></h3>
+                    <h3 class="ui-title"><label id="lblorigdes"></label></h3>
+                <p></p>
+                    <fieldset data-role="controlgroup" data-type="horizontal">  
+                    <a href="#" data-theme="a" data-role="button" data-icon="check" onclick="location.href='entregas.html';">Entrega</a>
+                    <a href="#" data-theme="a" data-role="button" data-icon="alert" data-iconpos="right" onclick="location.href='registroCheckpoint.html';" >Incidente</a>
+                    </fieldset>
+                </div>
+            </div>
+        <div data-role="footer" data-position='fixed'>
+            <h1>K&ouml;nnen MEK 2019</h1> 
+        </div> 
+        <div id="panelM" data-role="panel" data-position="left" data-display="push" data-theme="d">  
+            <ul data-role="listview" id="menuinicial" name="menuinicial">                                			  
+                <li><center>Usuario: <div id="nombreuser"></div></center></li>                
+                <li data-icon="bullets"><a href="#" onclick="location.href='servicios.html';">Mis Servicios</a></li>
+                <li data-icon="search"><a href="#">Consultar Servicio</a></li>
+                <li data-icon="edit"><a href="#" onclick="location.href='registroCheckpoint.html';">Entrada a almacén</a></li>
+                <li data-icon="info"><a href="#" onclick="location.href='menu_legal.html';">Legal</a></li>
+	            <li data-icon="lock"><a href="#" onclick="cerrarSession();">Cerrar Sesi&oacute;n</a></li>                      
+            </ul>    
+        </div>
+    </div>
+</body>
+</html>
+<script>
+   $(document).ready(function(){
+        document.addEventListener("online",intervalo_hilo,false);
+    });
+</script>
+<script> 
+function centra(){
+    var marcadoresini;
+    var marker;
+    var top=(document.body.clientHeight-190)+"px";     
+    var tamanopantalla=(document.body.clientHeight-100)+"px";     
+    document.getElementById("abajo").style.marginTop=top;  //pone el menu de abajo centrado al tamano de la pantalla
+    document.getElementById("map").style.height=tamanopantalla; //pone el mapa al tamano de la pantalla
+}   
+
+function obtenservicios(){  
+    var urlconex = sessionStorage.getItem("urlconex");
+    document.getElementById("idservicios").innerHTML = "";
+    var idafiliado = sessionStorage.getItem("idusuario");      
+    var dataString="idafiliado="+idafiliado+"";  
+    habilitarloading();
+    $.ajax({
+		type : "GET",
+		url : urlconex+"consulta_servicios.php?"+dataString,		        
+		error : function() {
+            inabilitarloading();
+            alert("error conexion al servidor");
+		},
+        success: function(data) { 
+            var latitud="",longitud="";            
+            var marcaini;   
+            var tracknumber="";
+            var obj = JSON.parse(data);            
+            var numserv=obj.servicios_generados.length;
+            marcadoresini=new Array(numserv);
+            var li=document.createElement('li');
+            li.id="";
+            li.innerHTML="<a href='#' onclick='obtenservicios()'>Ver todos los servicios</a>";
+            for(var i=0;i<numserv;i++){
+                var idmov=obj.servicios_generados[i].IdMov;
+                latitud=obj.servicios_generados[i].latitud;                
+                longitud=obj.servicios_generados[i].longitud;
+                tracknumber=obj.servicios_generados[i].Tracknumber;
+                marcadoresini[i]=["Servicio: "+idmov, ""+latitud, ""+longitud, "#"+idmov+"  "+obj.servicios_generados[i].cdorigen+" a "+obj.servicios_generados[i].cddestino];                
+                var ori=obj.servicios_generados[i].cdorigen+" - "+obj.servicios_generados[i].cddestino+"";                 
+                var li=document.createElement('li');
+                    li.id=obj.servicios_generados[i].IdMov;
+                li.innerHTML="<a href='#' onclick='initMapauno("+latitud+","+longitud+","+tracknumber+",2)'>"+ori+"</a>";
+                    document.getElementById("idservicios").appendChild(li);                                
+            }             
+            $("#idservicios").listview("refresh");              
+            vermapa(latitud,longitud,marcadoresini);
+            inabilitarloading();
+        }
+	});
+}    
+obtenservicios();           
+ function verdetalle(idservicio){     
+    location.href="pintar.html";    
+ } 
+    
+    
+</script>
+<script>
+ var infowindow;   
+ function setMarkers(map, marcadores) {
+        for (var i = 0; i < marcadores.length; i++) {            
+            var myLatLng = new google.maps.LatLng(marcadores[i][1], marcadores[i][2]);
+            marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,                
+                title: marcadores[i][0],
+            });
+            (function(i, marker) {
+                google.maps.event.addListener(marker,'click',function() {
+                if (!infowindow) {
+                    infowindow = new google.maps.InfoWindow();
+                }
+                infowindow.setContent(marcadores[i][3]);
+                infowindow.open(map, marker);
+                });
+            })(i, marker);
+        }
+    };
+
+var map;
+var beachMarker;
+function vermapa(latini,longini,marcadoresini){    
+    var latlng = new google.maps.LatLng(latini,longini);
+    var mapOptions = {
+        zoom: 12,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+    }
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    
+    marcadoresini=[];
+    setMarkers(map, marcadoresini);
+   
+}
+    
+function clearMap()
+{
+    marker.setMap(null);    
+    
+}     
+var directionsDisplay=null;
+function initMapauno(lati,longi, servicio,valor) {  
+    $( "#set" ).children( ":last" ).collapsible( "collapse" );   
+    if(directionsDisplay!=null){
+        directionsDisplay.setMap(null);    
+    }
+    sessionStorage.setItem("servicioselecionado", servicio);
+    document.getElementById("latserviciodestino").value=lati;
+    document.getElementById("longserviciodestino").value=longi;
+    document.getElementById("txtsetvicio").value=servicio;
+    
+    var urlsinicial="registroCheckpoint.html";
+    var labels="Recolección";
+    if(valor=="2"){
+        urlsinicial="entregas.html";
+        labels="Entrega";
+    }                  
+        document.getElementById("lblservi").innerHTML="<h3>Servicio: "+servicio+"</h3>";        
+        document.getElementById("lblnoservicio").innerHTML=""+servicio+"";
+        obtendatosservicio(servicio);
+        habilitarloading();   
+        
+        var cordenadaentrega=lati+","+longi;
+        var latitud = sessionStorage.getItem("latitud");
+        var longitud = sessionStorage.getItem("longitud");         
+        var directionsService = new google.maps.DirectionsService;
+        directionsDisplay = new google.maps.DirectionsRenderer;  
+            
+        directionsDisplay.setMap(map);        
+          var ubicacionactual=latitud+","+longitud;                 
+          calculateAndDisplayRoute(directionsService, directionsDisplay,ubicacionactual,cordenadaentrega);
+          map.setZoom(12);
+        inabilitarloading();
+       
+      }
+
+      function calculateAndDisplayRoute(directionsService, directionsDisplay,ubicacionactual,cordenadaentrega) {
+         
+        var waypts = [];
+        var checkboxArray;        
+        var ini = ubicacionactual;  
+        var end = cordenadaentrega;
+        directionsService.route({
+          origin: ini,
+          destination: end,
+          waypoints: waypts,
+          optimizeWaypoints: true,
+          travelMode: 'DRIVING'
+        }, function(response, status) {            
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);            
+            var route = response.routes[0];  
+            document.getElementById("lbltiempo").innerHTML=""+route.legs[0].duration.text;  
+            document.getElementById("lbldistancia").innerHTML=""+route.legs[0].distance.text;
+            for (var i = 0; i < route.legs.length; i++) {                
+              var routeSegment = i + 1;                
+            }
+               map.setZoom(12);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      }
+    
+//actualizar mapa cada n tiempo
+var x = setInterval(function() {
+   var lati = document.getElementById("latserviciodestino").value;
+   var longi = document.getElementById("longserviciodestino").value;
+   var txtsetvicio = document.getElementById("txtsetvicio").value; 
+    
+   if(lati!=""){
+        initMapauno(lati,longi, txtsetvicio,2) ;         
+   }     
+   
+}, 18000);     
+</script>
+<script>
+var nombreusuario = sessionStorage.getItem("nombreuser");   
+document.getElementById("nombreuser").innerHTML=""+nombreusuario;
+    
+function obtendatosservicio(servicio){
+    var urlconex = sessionStorage.getItem("urlconex");        
+    var dataString="tracknumber="+servicio+"";      
+    $.ajax({
+		type : "GET",
+		url : urlconex+"obtener_datos_servicio.php?"+dataString,		        
+		error : function() {
+            inabilitarloading();
+            alert("error conexion al servidor");
+		},
+        success: function(data) { 
+            var latitud="",longitud="";            
+            var marcaini;   
+            var tracknumber="";
+            var obj = JSON.parse(data);            
+            var numserv=obj.servicios_generados.length;                                           
+            for(var i=0;i<numserv;i++){                
+                var razon_social=obj.servicios_generados[i].razon_social;
+                var EmpresaDestinatario=obj.servicios_generados[i].EmpresaDestinatario;                
+                var cdorigen=obj.servicios_generados[i].calleorigen+" #"+obj.servicios_generados[i].noextorigen+" Col. "+obj.servicios_generados[i].coloniaorigen+", "+obj.servicios_generados[i].cdorigen;                                                         
+                var cddestino=obj.servicios_generados[i].calledestino+" #"+obj.servicios_generados[i].noextdestino+" Col. "+obj.servicios_generados[i].coloniadestino+", "+obj.servicios_generados[i].cddestino;     
+                document.getElementById("lblenviarecibe").innerHTML="<b>Envia:</b> "+razon_social+"<br><b>Recibe:</b> "+EmpresaDestinatario;    
+                document.getElementById("lblorigdes").innerHTML="<b>Origen:</b> "+cdorigen+"<br><br><b>Destino:</b> "+cddestino;
+            }                         
+            inabilitarloading();
+        }
+	});            
+}
+centra();
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGkGcb30-SZjDt9N6VIUgAoPwX-MZCPFE&callback=myMap"></script>

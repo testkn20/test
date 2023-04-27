@@ -1,0 +1,19 @@
+{
+  "androidAlias": "key0",
+  "androidAliasPassword": "konnen2021",
+  "androidKeystore": "certificates/android.p12",
+  "androidKeystorePassword": "konnen2021",
+  "googlePlayKey": "certificates/google.json",
+  "googlePlayTrack": "production",
+  "iosDevP12": "",
+  "iosDevP12Password": "",
+  "iosDevelopment": "",
+  "iosDistP12": "",
+  "iosDistP12Password": "",
+  "iosDistribution": "",
+  "iosPackageType": "",
+  "itunesAccount": "",
+  "itunesAppPassword": "",
+  "platform": "android",
+  "release": "debug"
+}

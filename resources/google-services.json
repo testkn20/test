@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "244241678849",
+    "firebase_url": "https://mekpush.firebaseio.com",
+    "project_id": "mekpush",
+    "storage_bucket": "mekpush.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244241678849:android:bed36ca5c82f6ee6",
+        "android_client_info": {
+          "package_name": "xdk.intel.template"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244241678849-qfl42vl59lhh8j4b17qvfs7ghkftv3gm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6LPVknJ9NraXx1s3J8T7q5r2af88qG2c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

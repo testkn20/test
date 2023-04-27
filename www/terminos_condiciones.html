@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blank Cordova Mobile App Template</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <style>
+        @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }          @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+        @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }                   @viewport { user-zoom: fixed ; min-zoom: 100% ; }
+        #contTerminos {
+            background-color: #FFFFFF;
+        }
+        .pTerminos {
+            text-align: justify;
+            font-size: 16px;
+            font-family: sans-serif;
+        }
+        .listTerminos {
+            list-style-type: square;
+            padding-left: 30px;
+        }
+        .ui-content {
+            padding-left: 7px !important;
+            padding-right: 7px !important;
+        }
+        #textoTerminos {
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+        }
+    </style>
+    <!--Librerias JQUERY MOBILE 1.4.5 -->
+    <link rel="stylesheet" href="css/theme-konnen.min.css"/>
+    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css"/>
+    <link rel="stylesheet" href="jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css"/>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
+   <script src="js/sweet.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/init-app.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/js_funciones_mek.js"></script>
+    <script src="xdk/init-dev.js"></script> 
+    <script src="js/hilo.js"></script>
+    <link rel="stylesheet" href="css/app.css">
+</head> 
+<body>   
+    <div data-role="page" id="index" data-theme="c"> 
+        <div data-role="header" data-position='fixed'>
+            <center><img src="imagenes/e-konnen.png" /></center>
+            <a href="#panelM" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all"></a>
+        </div>
+        
+        <div data-role="content" class="ui-content">
+            <div class="ui-field-contain" id="contTerminos"> 
+                <div id="textoTerminos">
+                    <p style="margin:-5.5% 0;"><center><h3><strong>MEK Innovación Tecnológica en Logística, S.A. de C.V.</strong></h3></center></p>
+                    <p><center><h3><strong>TÉRMINOS Y CONDICIONES</strong></h3></center></p>
+                    <div>
+                        <h4><strong>1. Relación Contractual</strong></h4>
+                        <div class="pTerminos">
+                            <p>
+                                Las presentes Condiciones de uso (en adelante "Condiciones") regulan el acceso o uso que usted haga como persona, de aplicaciones, páginas web, contenido, productos y servicios (en adelante los "Servicios") puestos a disposición por <strong>MEK Innovación Tecnológica en Logística, S.A. de C.V.</strong> (en adelante "MEK").
+                            </p>
+                            <p>
+                                Los mensajeros son personas independientes de MEK, no ligadas con contrato laboral o similar. MEK pone a disposición de los usuarios aplicaciones y páginas web que permiten  ordenar servicios de transporte de bienes, dentro del marco legal establecido en estas Condiciones.
+                            </p>
+                            <p>LEA ESTAS CONDICIONES DETENIDAMENTE ANTES DE ACCEDER O USAR LOS SERVICIOS.</p>
+                        </div>
+                        <h4><strong>2. Aceptación de las Condiciones</strong></h4>
+                        <div class="pTerminos">
+                            <p>
+                                Mediante su acceso y uso de los Servicios, los integrantes acuerdan vincularse jurídicamente por estas Condiciones. Si cualquiera de los integrantes no acepta estas Condiciones no podrá acceder o usar los Servicios. Estas Condiciones sustituyen expresamente los acuerdos compromisos previos con los Integrantes.
+                            </p>
+                            <p>
+                                MEK podrá poner fin de inmediato a estas Condiciones o cualquiera de los integrantes o, en general, dejar de ofrecer o denegar el acceso a los Servicios o cualquier parte de ellos, en cualquier momento y por cualquier motivo justificado.
+                                Las Condiciones contienen cláusulas específicas relacionadas al transporte de bienes y mercancías. Creando una solicitud de entrega el usuario acepta dichas cláusulas.
+                            </p>
+                            <p>
+                                MEK podrá modificar las Condiciones relativas a los Servicios cuando lo considere oportuno. Las modificaciones serán efectivas después de la publicación por parte de MEK de dichas Condiciones actualizadas en esta ubicación o las políticas modificadas o condiciones suplementarias sobre el Servicio aplicable. Su acceso o uso continuo de los Servicios después de dicha publicación constituye su consentimiento a vincularse por las Condiciones y sus modificaciones.
+                            </p>
+                            <p>
+                                Ninguna condición suplementaria especial o adicional, expresada por un integrante o acordada entre los integrantes podrá prevalecer sobre estas Condiciones.
+                            </p>
+                            <p>
+                                La recopilación y el uso que hacemos de la información personal en relación con los Servicios, es conforme se dispone en la <a href="politica_privacidad.html">Política de privacidad de MEK</a>.
+                            </p>
+                            <p>
+                                MEK podrá facilitar a un procesador de reclamaciones o a una aseguradora cualquier información necesaria (incluida su información de contacto) si hubiera quejas, disputas o conflictos, que pudieran incluir un accidente, implicándole a usted y a un tercero (incluido el conductor de la compañía de transporte) y dicha información o dichos datos fueran necesarios para resolver la queja, la disputa o el conflicto.
+                            </p>
+                        </div>
+                        <h4><strong>3. Definiciones</strong></h4>
+                        <div class="pTerminos">
+                            <p>
+                                <strong>"Aplicaciones":</strong> todos los desarrollos accesibles desde un Dispositivo y que permiten hacer uso de los Servicios incluido el sitio web. Y la aplicación MEK para Android y IOS.
+                            </p>
+                            <p>
+                                <strong>"Mensajero Asignado":</strong> es el mensajero seleccionado automáticamente por el sistema para realizar los Servicios para el Usuario.
+                            </p>
+                            <p>
+                               <strong>"Dirección de Recolección":</strong> es la dirección de Recolección de Bienes indicada en la Solicitud de Orden.
+                            </p>
+                            <p>
+                               <strong>"Empresa":</strong> MEK Innovación Tecnológica en Logística.
+                            </p>
+                            <p>
+                               <strong>"Atención al Cliente":</strong> atencion.afiliados@e-konnen.com.
+                            </p>
+                            <p>
+                               <strong>"Mensajero":</strong> es el individuo, persona física, que ofrece a través de las aplicaciones sus servicios de entrega de Bienes en nombre de los usuarios.
+                            </p>
+                            <p>
+                               <strong>"Bienes":</strong> son todos los artículos sujetos a la Solicitud de Orden, a excepción de los Bienes Excluidos.
+                            </p>
+                            <p>
+                               <strong>"Dirección de Entrega":</strong> es la dirección o múltiples direcciones de Recolección o entrega de los Bienes indicadas en la Solicitud de Orden.
+                            </p>
+                            <p>
+                               <strong>"Entrega de Bienes":</strong> es el servicio de mensajería o paquetería realizado por el mensajero para el usuario a través de las aplicaciones o el sitio.
+                            </p>
+                            <p>
+                               <strong>"Zona de Entrega":</strong> zona en la que la empresa indica un precio o tarifa igual para diferentes direcciones que se encuentran dentro de esta, de acorde a lo estipulado en la página de Tarifas del Sitio.
+                            </p>
+                            <p>
+                               <strong>"Dispositivo":</strong> todo tipo de dispositivos móviles, portátiles, o fijos, (Smartphone, celular, PC, Tablet, etc…) que se pueden usar para conectarse a internet, instalar y hacer uso de las Aplicaciones.
+                            </p>
+                            <p>
+                               <strong>"Artículos excluidos":</strong> lista de artículos excluidos, especificados en el Anexo 1, de los cuales la Empresa no acepta responsabilidad alguna.
+                            </p>
+                            <div>
+                                <p>
+                                   <strong>"Fuerza Mayor":</strong> cualquier circunstancia fuera del control razonable de las Partes, incluidas, pero no limitadas por las siguientes:
+                                </p>
+                                <ul class="listTerminos">
+                                    <li>Inundaciones, incendios, terremotos, y cualquier otro cataclismo natural.</li>
+                                    <li>Actos de guerra, revoluciones y cualquier otro acto de violencia masiva.</li>
+                                    <li>Actos de Dios.</li>
+                                </ul>
+                            </div>
+                            <p>
+                               <strong>"Integrante":</strong> hace referencia al Mensajero o al Usuario.
+                            </p>
+                            <div>
+                                <p>
+                                   <strong>"Método de Transporte":</strong> es el método o métodos utilizados por el Mensajero para transportar los Bienes y realizar la Entrega de Bienes, incluyendo, pero no limitándose por:
+                                </p>
+                                <ul class="listTerminos">
+                                    <li>Transporte a pie</li>
+                                    <li>En bicicleta</li>
+                                    <li>En motocicleta</li>
+                                    <li>Vehículo terrestre de motor (en adelante "Vehículo")</li>
+                                </ul>
+                            </div>
+                            <p>
+                               <strong>"Precio Ofrecido":</strong> es la cuota calculada en base a las tarifas estipuladas en el sitio, para realizar la Entrega de Bienes.
+                            </p>
+                            <p>
+                               <strong>"Aceptación de Orden":</strong> es la confirmación por parte del Usuario de su aceptación del Precio ofrecido y de que autoriza a la Empresa a pasar factura al usuario en nombre del Mensajero.
+                            </p>
+                            <p>
+                               <strong>“Detalles de Orden":</strong> son todos los detalles que proporciona el usuario para la realización de la Entrega de Bienes.
+                            </p>
+                            <p>
+                               <strong>"Solicitud de Orden":</strong> es la solicitud que realiza el usuario de aceptación por parte del mensajero a realizar de los Servicios estipulados en los detalles de Orden.
+                            </p>
+                            <p>
+                               <strong>"Parte o Partes":</strong> significa todas, varias o cualquiera de las partes por separado, siendo estas el usuario, el mensajero o la empresa.
+                            </p>
+                            <p>
+                               <strong>"Precio":</strong> es la remuneración por Entrega de Bienes y Servicios que se factura al Usuario de acuerdo a lo estipulado en el Anexo 2.
+                            </p>
+                            <p>
+                               <strong>"Artículos Prohibidos":</strong> son todos aquellos artículos a los que se hace referencia en el Anexo 1.
+                            </p>
+                            <div>
+                                <p>
+                                   <strong>ANEXO 2 MERCANCÍAS PROHIBIDAS O EXCLUIDAS PARA SU TRANSPORTE</strong>
+                                </p>
+                                <ul class="listTerminos">
+                                    <li>Alcohol. Todas las bebidas alcohólicas con independencia de su graduación.</li>
+                                    <li>Explosivos. Fuegos artificiales, petardos, municiones, pólvora, bengalas.</li>
+                                    <li>Sustancias Inflamables. Fósforos, carbones</li>
+                                    <li>Muestras biológicas. Sangre, orina, heces y esputo, etc.</li>
+                                    <li>Transportes funerarios. Restos humanos, transportes funerarios, Cenizas.</li>
+                                    <li>Armas. Escopetas de aire comprimido, pistolas, rifles, réplicas de armas (incluidos juguetes), cuchillos, munición.</li>
+                                    <li>El opio y sus derivados. La cocaína y demás estupefacientes y sustancias psicotrópicas.</li>
+                                    <li>Sustancias toxicas. Pesticidas, químicos agrícolas, compuestos de mercurio, bacterias, virus.</li>
+                                    <li>Material radioactivo.</li>
+                                    <li>Mercancías Perecederas. (ATP) que precisan de unas condiciones de temperatura, humedad, luminosidad o manipulación específica.</li>
+                                    <li>Líquidos inflamables. Encendedores de gasolina, líquidos para encendedor, pinturas al óleo, sustancias adhesivas, perfumes.</li>
+                                    <li>Gases comprimidos. Mecheros, tanques de buceo, camping gas, aerosoles (spray), extintores.</li>
+                                    <li>Material corrosivo. Baterías, mercurio, ácido clorhídrico</li>
+                                    <li>Alimentos. Alimentos, sólidos, líquidos y complementos - con independencia del tipo de envasado utilizado</li>
+                                    <li>Vidrio plano y Cristal. Acuarios, cristales de cuadros, marcos, espejos. Cuando la mayor parte del artículo enviado es de cristal, se considera cristal.</li>
+                                    <li>Electrodomésticos.</li>
+                                    <li>Televisiones de plasma y pantallas LCD de más de 32" pulgadas.</li>
+                                    <li>Dinero en efectivo, las joyas que contengan piedras preciosas o materiales preciosos.</li>
+                                    <li>Explosivos. Fuegos artificiales y demás artículos de naturaleza incendiaria o inflamable, armas de fuego, material de guerra y municiones.</li>
+                                </ul>
+                            </div>
+                            <p>
+                               <strong>"Remitente":</strong> es el individuo, persona física, incluidos los agentes o representantes que actúan por cuenta de personas morales o empresas, cuyos datos de contacto son introducidos en el sitio o las Aplicaciones por el usuario en calidad de remitente de Bienes, y que se ubican en la Dirección de Recolección.
+                            </p>
+                            <p>
+                               <strong>"Servicios":</strong> son todas aquellas solicitudes de recolección y entrega realizadas por el usuario, puestas a disposición para el mensajero, que son  ofrecidos en el sitio y en las Aplicaciones.
+                            </p>
+                            <p>
+                               <strong>"Tecnología":</strong> son las Aplicaciones, el sitio, y cualquier otro método empleado por la Empresa para la realización automática de Pedidos entre usuario y mensajero.
+                            </p>
+                            <p>
+                               <strong>"Destinatario":</strong> es el individuo, persona física, incluidos a los agentes o representantes que actúan por cuenta de personas morales o empresas, cuyos datos de contacto son introducidos en el sitio o las Aplicaciones por el Usuario en calidad de Remitentes o Destinatarios de Bienes y que se ubican en la dirección de entrega o, en los casos que proceda, en un lugar adyacente a éste.
+                            </p>
+                            <p>
+                               <strong>"TyC" o "Términos" o "Condiciones":</strong> significa estos términos y condiciones, incluidos todos los anexos y la Política de Privacidad.
+                            </p>
+                            <p>
+                               <strong>"Usuario":</strong> significa el individuo, persona física mayor de edad, o la persona moral o empresa debidamente representada por un individuo mayor de edad, residente en México y que solicita la entrega de Bienes a través del sitio o las Aplicaciones.
+                            </p>
+                        </div>
+                        <h4><strong>4. Los Servicios</strong></h4>
+                        <div class="pTerminos">
+                            <p>
+                                Los Servicios constituyen una plataforma de tecnología que permite a los usuarios de aplicaciones móviles de MEK o páginas web, organizar y planear el transporte y/o servicios de logística con terceros proveedores independientes, incluidos terceros transportistas independientes y terceros proveedores logísticos independientes conforme a un acuerdo con MEK (“Terceros Proveedores”). A no ser que MEK lo acepte mediante un contrato separado por escrito con usted, los Servicios se ponen a disposición solo para su uso personal, no comercial.
+                            </p>
+                        </div>
+                        <h4><strong>5. Licencia</strong></h4>
+                        <div class="pTerminos">
+                            <p>
+                                La plataforma web y la aplicación móvil MEK app son propiedad de KÖNNEN SOLUCIONES EN LOGÍSTICA INTELIGENTE S.A. de C.V quien diseño y desarrolló la aplicación y por tanto es quien autoriza a MEK exclusivamente para poder hacer uso de ella.
+                            </p>
+                            <p>
+                                Sujeto al cumplimiento de estos Términos, MEK le otorga una licencia limitada, no exclusiva, no sublicenciable, revocable, no transferible para: (i) el acceso y uso de las Aplicaciones en su dispositivo personal solo en relación con su uso de los Servicios; y (ii) el acceso y uso de cualquier contenido, información y material relacionado que pueda ponerse a disposición a través de los Servicios, en cada caso solo para su uso personal, no comercial, MEK y sus licenciantes se reservan cualquier derecho que no haya sido expresamente otorgado por el presente.
+                            </p>
+                        </div>
+                        <h4><strong>6. Restricciones</strong></h4>
+                        <div class="pTerminos">
+                            <p>
+                                Usted no podrá: (i) retirar cualquier nota de derechos de autor, marca registrada u otra nota de propiedad de cualquier parte de los Servicios; (ii) reproducir, modificar, preparar obras derivadas sobre los Servicios, distribuir, licenciar, arrendar, revender, transferir, exhibir públicamente, presentar públicamente, transmitir, retrasmitir o explotar de otra forma los Servicios, excepto como se permita expresa;  (iii) descompilar, realizar ingeniería inversa o desmontar los Servicios, excepto como se permita la ley aplicable; (iv) enlazar, reflejar enmarcar cualquier parte de los Servicios; (v) causar o enlazar cualquier programa o script con el objeto de extraer, indexar, analizar o de otro modo realizar prospección de datos de cualquier parte de los Servicios; o (vi) intentar obtener un acceso no autorizado o dañar cualquier aspecto de los Servicios o sus sistemas o redes relacionados.
+                            </p>
+                        </div>
+                        <h4><strong>7. Servicios y contenido de Terceros</strong></h4>
+                        <div class="pTerminos">
+                            <p>
+                               Los Servicios podrán ponerse a disposición o ser accesible en relación con servicios y contenido de terceros (incluida la publicidad) que MEK no controle. Usted reconoce que podrán ser de aplicación diferentes condiciones y políticas de privacidad al uso que haga de dichos servicios y contenido de terceros. MEK no respalda dichos servicios y contenido de terceros y en ningún caso MEK será responsable de cualquier producto o servicio de dichos terceros proveedores. Adicionalmente Apple Inc., o BlackBerry Limited y/o sus correspondientes subsidiarias o afiliados internacionalmente serán terceros beneficiados en este contrato si usted accede a los Servicios utilizando Aplicaciones desarrolladas para dispositivos móviles con sistemas IOS, Android, Microsoft Windows, respectivamente. Estos terceros beneficiarios no son parte de este contrato y no son responsables de la prestación o apoyo de los Servicios de ninguna manera. Su acceso a los Servicios utilizando estos dispositivos se sujeta a las condiciones establecidas en las condiciones de servicio de terceros beneficiarios aplicables.
+                            </p>
+                        </div>
+                        <h4><strong>8. Titularidad</strong></h4>
+                        <div class="pTerminos">
+                            <p>
+                               Los Servicios y todos los derechos relativos a estos son y permanecerán de la propiedad de KONNEN SOLUCIONES EN LOGISTICA INTELIGENTE SA de CV o de sus licenciantes. Ninguno de estos términos ni su uso de los Servicios le transfieren u otorgan ningún derecho: (i) sobre o en relación con los Servicios, excepto en cuanto a la licencia limitada otorgada anteriormente; o bien (ii) a utilizar o mencionar en cualquier modo a los nombres de empresa, logotipos, nombres de producto y servicio, marcas comerciales o marcas de servicio de MEK o de sus licenciantes.
+                            </p>
+                        </div>
+                        <h4><strong>9. Su uso de los Servicios Cuentas de Usuario</strong></h4>
+                        <div class="pTerminos">
+                            <p>
+                               Con el fin de usar la mayor parte de los aspectos de los Servicios, usted debe registrarse y mantener activa una cuenta personal de usuario de los Servicios (en adelante "Cuenta"). Para obtener una Cuenta debe tener como mínimo 18 años, o tener la mayoría de edad legal en su jurisdicción (si es distinta a los 18 años). El registro de la cuenta le requiere que comunique a MEK determinada información personal, como su nombre, dirección, número de teléfono móvil (celular). Usted se compromete a mantener la información en su Cuenta de forma exacta, completa y actualizada. Si no mantiene la información de Cuenta de forma exacta, completa y actualizada, podrá resultar en su imposibilidad para acceder y utilizar los Servicios o en la resolución por parte de MEK de estos Términos celebrado con usted. Usted es responsable de toda la actividad que ocurre en su Cuenta y se compromete a mantener en todo momento de forma segura y secreta el nombre de usuario y la contraseña de su Cuenta. A menos que MEK permita otra cosa por escrito, usted solo puede poseer una Cuenta. 
+                            </p>
+                            <p><center><strong>Requisitos y conducta del usuario. </strong></center></p>
+                            <p>
+                                El Servicio no está disponible para el uso de personas menores de 18 años. Usted no podrá autorizar a terceros a utilizar su Cuenta, asimismo no podrá permitir a personas menores de 18 años que reciban servicios de transporte o logísticos de Terceros proveedores, a menos que aquellos sean acompañados por usted. No podrá ceder o transferir de otro modo su cuenta a cualquier otra persona o entidad. Usted acuerda cumplir con todas las leyes aplicables al utilizar los Servicios y solo podrá utilizar los Servicios con fines legítimos (p. ej., no para el transporte de materiales ilegales o peligrosos). En el uso de los Servicios no causará estorbos, molestias, incomodidades o daños a la propiedad, tanto al Tercero proveedor como a cualquier otra parte. En algunos casos, se le podrá requerir que facilite un documento de identidad para el acceso o uso de los Servicios, y usted acepta que se le podrá denegar el acceso o uso de los Servicios si se niega a facilitar el documento de identidad.  
+                            </p>
+                            <p><center><strong>Mensajes de texto. </strong></center></p>
+                            <p>
+                                Al crear una Cuenta, usted acepta que los Servicios le puedan enviar mensajes de texto informativos (SMS) como parte de la actividad comercial normal de su uso de los Servicios. Usted podrá solicitar la no recepción de mensajes de texto informativos (SMS) de MEK en cualquier momento en la dirección siguiente atencion.afiliados@e-konnen.com indicando que no desea recibir más dichos mensajes, junto con el número de teléfono del dispositivo móvil que recibe los mensajes. Usted reconoce que solicitar la no recepción de mensajes de texto informativos (SMS) podrá afectar al uso que usted haga de los Servicios. 
+                            </p>
+                            <div>
+                                <p><center><strong>Contenido proporcionado por el Usuario. </strong></center></p>
+                                <p>
+                                   MEK podrá, a su sola discreción, permitirle cuando considere oportuno, que envíe, cargue, publique o de otro modo ponga a disposición de MEK a través de los Servicios contenido e información de texto, audio y/o visual, incluidos comentarios y opiniones relativos a los Servicios, iniciación de peticiones de apoyo, así como presentación de admisiones para competiciones y promociones (en adelante "Contenido de usuario"). Todo Contenido de usuario facilitado por usted seguirá siendo de su propiedad. No obstante, al proporcionar Contenido de usuario a MEK , usted otorga una  licencia mundial, perpetua, una irrevocable, transferible, libre de regalías, con derecho a su licenciar, usar, copiar, modificar, crear obras derivadas, distribuir, exhibir públicamente, presentar públicamente o de otro modo explotar de cualquier manera dicho Contenido de usuario en todos los formatos y canales de distribución, conocidos ahora o ideados en un futuro (incluidos en relación con los Servicios y el negocio de MEK y en sitios y servicios de terceros), más sin aviso o consentimiento de usted y sin requerirse el pago a usted o a cualquier otra persona o entidad.  
+                                </p>
+                                <p>
+                                    Usted declara y garantiza que: (i) es el único y exclusivo propietario de todo el Contenido de usuario o que tiene todos los derechos, licencias, consentimientos y permisos necesarios para otorgar a MEK la licencia al Contenido de usuario como establecido anteriormente; y (ii) ni el Contenido de usuario ni su presentación, carga, publicación o puesta a disposición de otro modo de dicho Contenido de usuario, ni el uso por parte de MEK del Contenido de usuario como está aquí permitido, infringirán, malversarán o violarán la propiedad intelectual o los derechos de propiedad de un tercero o los derechos de publicidad o privacidad o resultarán en la violación de cualquier ley o reglamento aplicable.
+                                </p>
+                                <p>
+                                    Usted acuerda no proporcionar Contenido de usuario que sea difamatorio, calumnioso, violento, obsceno, pornográfico, ilícito o de otro modo ofensivo, como determine MEK a su sola discreción, tanto si dicho material pueda estar protegido por la ley. MEK podrá, a su sola discreción y en cualquier momento y por cualquier motivo, sin avisarle previamente, revisar, controlar o eliminar Contenido de usuario. 
+
+                                </p>
+                            </div>
+                            <p><center><strong>Acceso a la red y dispositivos. </strong></center></p>
+                            <p>
+                                Usted es responsable de obtener el acceso a la red de datos necesario para utilizar los Servicios. Podrán aplicarse las tarifas y tasas de datos y mensajes de su red móvil si usted accede o utiliza los Servicios desde un dispositivo inalámbrico y usted será responsable de dichas tarifas y tasas. Usted es responsable de adquirir y actualizar el hardware compatible o los dispositivos necesarios para acceder y utilizar los Servicios y Aplicaciones y cualquier actualización de estos. MEK no garantiza que los Servicios, o cualquier parte de estos, funcionen en cualquier hardware o dispositivo particular. Además, los Servicios podrán ser objeto de disfunciones o retrasos inherentes al uso de Internet y de las comunicaciones electrónicas.  
+                            </p>
+                        </div>
+                        <h4><strong>10. Uso de los Servicios, responsabilidad y condiciones contractuales entre Usuarios y Mensajero </strong></h4>
+                        <div class="pTerminos">
+                            <ul class="listTerminos">
+                                <li>Mediante la aceptación de estos Términos se establece una relación contractual indefinida entre los integrantes y la Empresa, en relación a la licencia de utilización de los Servicios a través del Sitio y las Aplicaciones.</li>
+
+                                <li>La Empresa actúa como un intermediario entre Mensajero y Usuarios. La Entrega de Bienes está sujeta al contrato electrónico entre el Usuario y el Mensajero que se formaliza a través del Sitio y las Aplicaciones, de acuerdo a lo estipulado en estos términos.</li> 
+
+                                <li>La Solicitud de Entrega, que incluye información sobre la Dirección de Recolección, Remitente, Destinatario y Dirección de Entrega, es realizada por el Usuario a través del Sitio o las Aplicaciones, constituye una oferta para efectuar los Servicios de Entrega de Bienes al Precio indicado en el Precio Ofrecido.</li>
+
+                                <li>El Usuario reconoce y acepta, que la Solicitud de Entrega constituye por sí sola, de manera firme, inequívoca e irrevocable, una oferta de obligatorio cumplimiento por el Usuario, sujeta a la Aceptación por el Mensajero.</li> 
+
+                                <li>El Sitio y las Aplicaciones permiten la formalización automática de Solicitudes de Entrega, sin necesidad de intervención humana en el proceso. Para el cálculo automático del El Precio Ofrecido el sistema se basa en la Dirección de Recolección y Dirección de Entrega que el Usuario introduce en la Solicitud de Entrega. Por esto, es esencial que el Usuario introduzca la Dirección de Recolección y Dirección de Entrega correcta y válidamente en la solicitud de Entrega para que el Precio Ofrecido sea el adecuado y correcto. En caso contrario, el Precio puede variar en el proceso de realización de la Entrega de Bienes por el Mensajero.</li> 
+
+                                <li>La Empresa no está obligada a asignar un Mensajero a todas y cada una de las Solicitudes de Entrega. La Empresa se reserva el derecho a cancelar o denegar el asignamiento de Mensajero a cualquier Solicitud de Entrega. </li> 
+
+                                <li>El contrato electrónico para la realización de los Servicios solamente será automáticamente formalizado una vez que un Mensajero haya sido asignado a su Solicitud de Entrega.</li> 
+
+                                <li>El Mensajero es responsable personal de posibles daños, pérdida, robo o destrucción de Bienes, excepto en los casos en que esto se produzca por culpa del Remitente, eventos de Fuerza Mayor, defectos inherentes de los Bienes o mal empaquetado.</li>
+
+                                <li>El Mensajero debe realizar una revisión superficial de los Bienes (en caso de que no estén empaquetados) o del paquete o envoltorio al realizar la Recolección de Bienes. En caso de visualizar daños en los Bienes o el empaquetado deberá comunicárselo al Usuario inmediatamente e introducir la información relevante en el sistema a través del Sitio o las Aplicaciones.</li> 
+
+                                <li>El Mensajero no es responsable por cualquier pérdida indirecta originada por la Entrega de Bienes o por el fallo a realizar la Entrega de Bienes.</li>
+
+                                <li>El Usuario no está obligado a aceptar ningún Precio Ofrecido, y puede cancelar cualquier Solicitud de Pedido sin coste en caso de que no haya realizado la Aceptación de Orden.</li>
+
+                                <li>Una vez que el Usuario ha realizado la Aceptación de Orden, en caso de que ningún mensajero haya realizado o intentado realizar la Recolección de Bienes, la cancelación de la Solicitud de Entrega tendrá un costo del 50% del Precio.</li>
+
+                                <li>En caso de que un Mensajero haya realizado o intentado la Recolección de Bienes, la cancelación de la Solicitud de Entrega tendrá un costo del 100% del Precio para el Usuario.</li> 
+
+                                <li>En caso de que el Destinatario de los Bienes no pueda o se niegue a recibir los Bienes, el Usuario deberá pagar el precio de devolución de dichos Bienes al Remitente.</li>
+                            </ul>
+                        </div>
+                        <h4><strong>11. Renuncias; Limitación de responsabilidad; Indemnidad. </strong></h4>
+                        <div class="pTerminos">
+                            <p><center><strong>LIMITACIÓN DE RESPONSABILIDAD. </strong></center></p>
+                            <p>
+                                MEK NO SERÁ RESPONSABLE DE DAÑOS  INDIRECTOS, INCIDENTALES, ESPECIALES, EJEMPLARES, PUNITIVOS O EMERGENTES, INCLUIDOS EL LUCRO CESANTE, LA PÉRDIDA DE DATOS, LA LESIÓN PERSONAL O EL DAÑO A LA PROPIEDAD, NI DE PERJUICIOS RELATIVOS, O EN RELACIÓN CON, O DE OTRO MODO DERIVADOS DE CUALQUIER USO DE LOS SERVICIOS, INCLUSO AUNQUE MEK HAYA SIDO ADVERTIDO DE LA POSIBILIDAD DE DICHOS DAÑOS.
+                                LAS LIMITACIONES Y LA RENUNCIA EN ESTE APARTADO NO PRETENDEN LIMITAR LA RESPONSABILIDAD O ALTERAR SUS DERECHOS COMO CONSUMIDOR QUE NO PUEDAN EXCLUIRSE SEGÚN LA LEY APLICABLE. 
+
+                            </p>
+                            <p><strong>Indemnidad. </strong></p>
+                            <p>
+                                Usted acuerda mantener indemnes y responder frente a MEK y sus consejeros, directores, empleados y agentes por cualquier reclamación, demanda, pérdida, responsabilidad y gasto (incluidos los honorarios de abogados) que deriven de: (i) su uso de los Servicios o servicios o bienes obtenidos a través de su uso de los Servicios; (ii) su incumplimiento o violación de cualquiera de estas Condiciones; (iii) el uso por parte de MEK de su Contenido de usuario; o (iv) su infracción de los derechos de cualquier tercero, incluidos Terceros proveedores.
+                            </p>
+                        </div>
+                        <h4><strong>12. Legislación aplicable; Arbitraje. </strong></h4>
+                        <div class="pTerminos">
+                            <p>
+                                Salvo que aquí se especifique lo contrario, los presentes Términos se regirán e interpretarán exclusivamente en virtud de la legislación de los Estados Unidos Mexicanos, con exclusión de sus normas sobre conflicto de leyes.
+                            </p>
+                        </div>
+                        <h4><strong>13. Otras disposiciones</strong></h4>
+                        <div class="pTerminos">
+                            <p><strong>Notificaciones. </strong></p>
+                            <p>
+                                 MEK podrá notificar por medio de una notificación general en los Servicios, mediante un correo electrónico enviado a su dirección electrónica en su Cuenta o por comunicación escrita enviada a su dirección, según lo dispuesto en su Cuenta. Usted podrá notificar a MEK por comunicación correo electrónico enviado atencion.afiliados@e-konnen.com.
+                            </p>
+                            <div>
+                                <p><strong>Disposiciones generales. </strong></p>
+                                <p>
+                                    No podrá ceder ni transferir estas Condiciones, en todo o en parte, sin el consentimiento previo por escrito de MEK. Usted da su aprobación a MEK para ceder o transferir estas Condiciones, en todo o en parte, incluido a: (i) una subsidiaria o un afiliado; (ii) un adquirente del capital, del negocio o de los activos de MEK; o (iii) un sucesor por fusión. No existe entre usted, MEK o cualquier Tercer proveedor una empresa conjunta o relación de socios, empleo o agencia como resultado del contrato entre usted y MEK o del uso de los Servicios.
+                                </p>
+                                <p>
+                                    Si cualquier disposición de estos Términos se considerara ilegal, nula o inexigible, ya sea en su totalidad o en parte, de conformidad con cualquier legislación, dicha disposición o parte de esta se considerará que no forma parte de estos Términos, aunque la legalidad, validez y exigibilidad del resto de las disposiciones de estas Condiciones no se verá afectada. En ese caso, las partes deberán reemplazar dicha disposición ilegal, de esta se considerará que no forma parte de estos Términos, aunque la legalidad, validez y exigibilidad del resto de las disposiciones de estas Condiciones no se verá afectada. En este caso las partes deberán reemplazar dicha disposición ilegal, nula o inexigible, en todo o en parte por una disposición legal, válida y exigible que tenga, en la medida de lo posible, un efecto similar al que tenía la disposición ilegal, nula o inexigible, dados los contenidos y el propósito de estas Condiciones. Estas Condiciones constituyen el contrato íntegro y el entendimiento entre las partes en relación con el objeto y sustituye y reemplaza a todos los contratos o acuerdos anteriores o contemporáneos en relación con dicho objeto. 
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div>
+        <div data-role="footer" data-position='fixed'>
+            <h1>K&ouml;nnen MEK 2019</h1> 
+        </div> 
+        
+        <div id="panelM" data-role="panel" data-position="left" data-display="push" data-theme="d">  
+            <ul data-role="listview" id="menuinicial" name="menuinicial">                                			  
+                <!--<li><center>Usuario: <div id="nombreuser"></div></center></li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='servicios.html';">Mis Servicios</a></li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='menu_check.html';">Registro Movimientos</a></li>
+                <li data-icon="info"><a href="#" onclick="location.href='menu_legal.html';">Legal</a></li>
+                <li data-icon="lock"><a href="#" onclick="cerrarSession();">Cerrar Sesi&oacute;n</a></li>     Cambio 25 Oct 2019 Aldo-->
+                <li>
+                    <center>Usuario: <div id="nombreuser"></div></center>
+                    <div data-role="control-group" data-mini="true">
+                        <br>
+                        <center>
+                            <select name="flip_Estatus" id="flip_Estatus" data-role="flipswitch" data-theme="b" data-mini="true" onchange="evento_flipSwitchEstatus();">
+                                <option value="off"></option>
+                                <option value="on"></option>
+                            </select>
+                            <label id="lblEstatus" style="display: inline;">Disponible</label>
+                        </center>
+                    </div>
+                </li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='servicios.html';">Inicio</a></li>
+                <li data-icon="clock"><a href="#" onclick="location.href='historial_servicios.html';">Historial de Servicios</a></li>
+                <li data-icon="bullets"><a href="#" onclick="location.href='menu_check.html';">Registro Movimientos</a></li>
+                <li data-icon="info"><a href="#" onclick="location.href='menu_legal.html';">Legal</a></li>
+	            <li data-icon="lock"><a href="#" onclick="cerrarSession();">Cerrar Sesi&oacute;n</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+   $(document).ready(function(){
+        document.addEventListener("online",intervalo_hilo,false);
+       
+        var sEstatusSession = sessionStorage.getItem("estatusSession");//Pedimos el valor de la ultimo valor del estatus nombreuser        
+        if(sEstatusSession == "1"){
+            sessionStorage.setItem("entraAPagina", "1");            
+            $("#flip_Estatus").val("on").flipswitch("refresh");
+        }else if(sEstatusSession == "0"){
+            document.getElementById("lblEstatus").innerHTML = "No Disponible";
+            $("#flip_Estatus").val("off").flipswitch("refresh");
+        }
+    });
+</script>
+<script>
+    sessionStorage.setItem("servicioselecionado", '');
+    var nombreusuario = sessionStorage.getItem("nombreuser");   
+    document.getElementById("nombreuser").innerHTML=""+nombreusuario;
+</script>

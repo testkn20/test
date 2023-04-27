@@ -1,0 +1,58 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "HelloCordova"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "HelloCordova"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "HelloCordova"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "HelloCordova"
+        },
+        "cordova-plugin-fcm": {
+            "PACKAGE_NAME": "HelloCordova"
+        },
+        "cordova-plugin-android-permissions": {
+            "PACKAGE_NAME": "HelloCordova"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "HelloCordova"
+        },
+        "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "HelloCordova"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "HelloCordova"
+        },
+        "cordova-plugin-imei": {
+            "PACKAGE_NAME": "HelloCordova"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "HelloCordova"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "HelloCordova"
+        },
+        "cordova-plugin-crosswalk-webview-v3": {
+            "PACKAGE_NAME": "HelloCordova"
+        },
+        "cordova-plugin-build-architecture": {
+            "PACKAGE_NAME": "HelloCordova"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "HelloCordova"
+        }
+    }
+}
